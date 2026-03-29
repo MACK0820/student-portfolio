@@ -1,0 +1,337 @@
+import React, { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { ExternalLink } from 'lucide-react'
+
+import './Projects.css'
+
+function Projects() {
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  const mainProject = {
+    title: 'Computer Engineering Department Student Council Uniform Design',
+    description: 'A comprehensive design for the CPE-DSC shirt/uniform. Designed with modern aesthetics combining the college brand, tech elements, and department identity. This project showcases my ability to blend technical concepts with creative visual design.',
+    image: '/shirtDesign.jpg',
+    tools: ['Canva', 'Photopea'],
+    highlights: [
+      'Custom color scheme integration',
+      'Technical pattern design',
+      'Professional branding application',
+      'Multi-view presentation'
+    ]
+  }
+
+  const githubProjects = [
+    { name: 'Interactive Login Dashboard', url: 'https://github.com/mkasanpedro/INTERACTIVE-LOGIN-DASHBOARD-LA3.2.git' },
+    { name: 'Crypto Pulse', url: 'https://github.com/mkasanpedro/crypto-pulse.git' },
+    { name: 'University Enrollment Portal', url: 'https://github.com/mkasanpedro/KEI-University-Enrollment-Portal.git' },
+    { name: 'Git Front End', url: 'https://github.com/mkasanpedro/git-frontend-project.git' },
+    { name: 'Internet Web Basics', url: 'https://github.com/mkasanpedro/internet-web-basics.git' },
+    { name: 'React ES6', url: 'https://github.com/mkasanpedro/react-es6-lab.git' }
+  ]
+
+  const pubMats = [
+    { title: 'General Assembly DP Blast', image: '/gablast.png' },
+    { title: 'Prelim Examination', image: '/prelim.png' },
+    { title: 'Spoken Poetry', image: '/spoken.png' },
+    { title: 'CEA Roster Hunt', image: '/roster.png' },
+    { title: 'CpE DP Blast', image: '/cpeblast.png' }
+  ]
+
+  const artworks = [
+    { title: 'Attack on Titan - Mikasa', image: '/mikasa.jpeg' },
+    { title: 'Serpent', image: '/serpent.jpeg' }
+  ]
+
+  const attendedEvents = [
+    { title: 'Leadership Converge 2025', image: '/lead-con.jpeg' },
+    { title: 'Leadership: Making a Positive Difference Together', image: '/group-counselling.jpeg' },
+    { title: 'Kabataang KaKaiBa: Nagmamahal sa Diyos at Bayan', image: '/kkb.jpg' }
+  ]
+
+  const softwareTools = [
+    { name: 'GitHub', icon: '💻', description: 'Version control & collaboration', url: 'https://github.com' },
+    { name: 'Canva', icon: '🎨', description: 'Graphic design & templates', url: 'https://canva.com' },
+    { name: 'Photopea', icon: '🖼️', description: 'Advanced image editing', url: 'https://photopea.com' },
+    { name: 'CapCut', icon: '🎬', description: 'Video editing & effects', url: 'https://www.capcut.com' }
+  ]
+
+  return (
+    <div className="projects-page" id="projects">
+      <div className="page-header">
+        <h1>PROJECTS & EVENTS</h1>
+        <p className="subtitle">Creative Work, Design Solutions & Engagements</p>
+      </div>
+
+      {/* Featured Project: Shirt Design */}
+      <motion.section
+        className="featured-project"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+      >
+        <div className="featured-grid">
+          <div className="featured-image">
+            <img src="/shirt-design.png" alt={mainProject.title} onClick={() => setSelectedImage(mainProject.image)} style={{ cursor: 'pointer' }} />
+          </div>
+          <div className="featured-content">
+            <h2>{mainProject.title}</h2>
+            <p className="project-description">{mainProject.description}</p>
+
+            <div className="tools-section">
+              <h3>Tools I Used</h3>
+              <div className="tools-list">
+                {mainProject.tools.map((tool, index) => (
+                  <span key={index} className="tool-badge">{tool}</span>
+                ))}
+              </div>
+            </div>
+
+            <div className="highlights-section">
+              <h3>Highlights</h3>
+              <ul className="highlights-list">
+                {mainProject.highlights.map((highlight, index) => (
+                  <li key={index}>{highlight}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </motion.section>
+
+      {/* NEW: GitHub Projects Section */}
+      <section className="github-projects-section" style={{ marginTop: '80px' }}>
+        <motion.h2 
+          initial={{ opacity: 0 }} 
+          whileInView={{ opacity: 1 }} 
+          viewport={{ once: true }}
+        >
+          GitHub Projects
+        </motion.h2>
+        <p style={{ color: 'var(--text-secondary)', textAlign: 'center', marginBottom: '15px' }}>
+          Check out the source code for my web development projects.
+        </p>
+        
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px', marginTop: '30px' }}>
+          {githubProjects.map((repo, index) => (
+            <motion.a
+              key={index}
+              href={repo.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              whileHover={{ y: -5, scale: 1.02 }}
+              style={{
+                textDecoration: 'none', 
+                background: 'var(--surface)', 
+                padding: '25px', 
+                borderRadius: '15px', 
+                border: '1px solid rgba(255, 102, 51, 0.3)', 
+                display: 'flex', 
+                flexDirection: 'column', 
+                justifyContent: 'center', 
+                position: 'relative', 
+                overflow: 'hidden'
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '15px' }}>
+                <div style={{ fontSize: '2rem' }}>📁</div>
+                <ExternalLink size={20} color="var(--accent)" />
+              </div>
+              <h3 style={{ color: 'var(--text-primary)', margin: 0, fontSize: '1.2rem', lineHeight: '1.4' }}>{repo.name}</h3>
+              <div style={{ marginTop: '15px', color: 'var(--accent)', fontSize: '0.9rem', fontWeight: 'bold' }}>
+                View Repository &rarr;
+              </div>
+            </motion.a>
+          ))}
+        </div>
+      </section>
+
+      {/* NEW: Publication Materials Gallery */}
+      <section className="events-section" style={{ marginTop: '80px' }}>
+        <motion.h2 
+          initial={{ opacity: 0 }} 
+          whileInView={{ opacity: 1 }} 
+          viewport={{ once: true }}
+        >
+          Publication Materials
+        </motion.h2>
+        <p style={{ color: 'var(--text-secondary)', textAlign: 'center', marginBottom: '15px' }}>
+          Click any design to view it full screen.
+        </p>
+        
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '25px', marginTop: '30px' }}>
+          {pubMats.map((item, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: index * 0.15 }}
+              whileHover={{ y: -10, scale: 1.02 }}
+              onClick={() => setSelectedImage(item.image)}
+              style={{
+                background: 'var(--surface)', padding: '20px', borderRadius: '15px', border: '1px solid rgba(255, 102, 51, 0.2)', display: 'flex', flexDirection: 'column', textAlign: 'center', cursor: 'pointer'
+              }}
+            >
+              <div style={{ width: '100%', height: '200px', overflow: 'hidden', borderRadius: '10px', marginBottom: '20px', background: '#111' }}>
+                <img src={item.image} alt={item.title} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+              </div>
+              <h3 style={{ fontSize: '1.1rem', margin: 0, color: 'var(--text-primary)' }}>{item.title}</h3>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* NEW: Artworks Gallery */}
+      <section className="events-section" style={{ marginTop: '80px' }}>
+        <motion.h2 
+          initial={{ opacity: 0 }} 
+          whileInView={{ opacity: 1 }} 
+          viewport={{ once: true }}
+        >
+          Artworks
+        </motion.h2>
+        <p style={{ color: 'var(--text-secondary)', textAlign: 'center', marginBottom: '15px' }}>
+          Click any artwork to view it full screen.
+        </p>
+        
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '25px', marginTop: '30px' }}>
+          {artworks.map((item, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: index * 0.15 }}
+              whileHover={{ y: -10, scale: 1.02 }}
+              onClick={() => setSelectedImage(item.image)}
+              style={{
+                background: 'var(--surface)', padding: '20px', borderRadius: '15px', border: '1px solid rgba(255, 102, 51, 0.2)', display: 'flex', flexDirection: 'column', textAlign: 'center', cursor: 'pointer'
+              }}
+            >
+              <div style={{ width: '100%', height: '250px', overflow: 'hidden', borderRadius: '10px', marginBottom: '20px', background: '#111' }}>
+                <img src={item.image} alt={item.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              </div>
+              <h3 style={{ fontSize: '1.1rem', margin: 0, color: 'var(--text-primary)' }}>{item.title}</h3>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* Attended Sessions/Events Gallery */}
+      <section className="events-section" style={{ marginTop: '80px' }}>
+        <motion.h2 
+          initial={{ opacity: 0 }} 
+          whileInView={{ opacity: 1 }} 
+          viewport={{ once: true }}
+        >
+          Attended Sessions & Events
+        </motion.h2>
+        
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '25px', marginTop: '30px' }}>
+          {attendedEvents.map((event, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: index * 0.15 }}
+              whileHover={{ y: -10, scale: 1.02 }}
+              onClick={() => setSelectedImage(event.image)}
+              style={{
+                background: 'var(--surface)', padding: '20px', borderRadius: '15px', border: '1px solid rgba(255, 102, 51, 0.2)', display: 'flex', flexDirection: 'column', textAlign: 'center', cursor: 'pointer'
+              }}
+            >
+              <div style={{ width: '100%', height: '200px', overflow: 'hidden', borderRadius: '10px', marginBottom: '20px', background: '#111' }}>
+                <img src={event.image} alt={event.title} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+              </div>
+              <h3 style={{ fontSize: '1.1rem', margin: 0, color: 'var(--text-primary)' }}>{event.title}</h3>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* Software Tools Section */}
+      <section className="software-tools-section" style={{ marginTop: '80px' }}>
+        <motion.h2
+          initial={{ opacity: 0 }} 
+          whileInView={{ opacity: 1 }} 
+          viewport={{ once: true }}
+        >
+          Tools I Use As P.R.O.
+        </motion.h2>
+        
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '20px', marginTop: '30px' }}>
+          {softwareTools.map((tool, index) => (
+            <motion.a
+              key={index}
+              href={tool.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="tool-card"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: index * 0.15 }}
+              whileHover={{ y: -10 }}
+              style={{
+                textDecoration: 'none', background: 'var(--surface)', padding: '25px', borderRadius: '15px', border: '1px solid rgba(255, 102, 51, 0.2)', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', position: 'relative', overflow: 'hidden'
+              }}
+            >
+              <div style={{ fontSize: '3rem', marginBottom: '15px' }}>{tool.icon}</div>
+              <h3 style={{ color: 'var(--text-primary)', marginBottom: '10px' }}>{tool.name}</h3>
+              <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginBottom: '20px' }}>{tool.description}</p>
+              
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--accent)', fontSize: '0.9rem', fontWeight: 'bold' }}>
+                <ExternalLink size={16} />
+                <span>Visit</span>
+              </div>
+            </motion.a>
+          ))}
+        </div>
+      </section>
+
+      {/* MASTER FULLSCREEN MODAL (LIGHTBOX) */}
+      <AnimatePresence>
+        {selectedImage && (
+          <motion.div
+            key="modal"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSelectedImage(null)}
+            style={{
+              position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', backgroundColor: 'rgba(0, 0, 0, 0.95)', zIndex: 99999, display: 'flex', justifyContent: 'center', alignItems: 'center', cursor: 'zoom-out', padding: '20px'
+            }}
+          >
+            <motion.img
+              key="modal-img"
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+              src={selectedImage}
+              alt="Fullscreen View"
+              style={{
+                maxWidth: '90%', maxHeight: '90%', objectFit: 'contain', borderRadius: '10px', boxShadow: '0 0 50px rgba(255, 102, 51, 0.5)', border: '2px solid rgba(255, 102, 51, 0.3)'
+              }}
+              onClick={(e) => e.stopPropagation()} 
+            />
+            <div style={{
+              position: 'absolute', top: '30px', right: '40px', color: 'white', fontSize: '2.5rem', cursor: 'pointer', fontWeight: 'lighter', opacity: 0.7
+            }} onClick={() => setSelectedImage(null)}>
+              &times;
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+    </div>
+  )
+}
+
+export default Projects

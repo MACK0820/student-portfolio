@@ -1,0 +1,1341 @@
+:root {
+  --bg:        #0f0a0a;
+  --bg2:       #161010;
+  --bg3:       #1c1414;
+  --surface:   #221818;
+  --surface2:  #2a1e1e;
+  --border:    #3a2020;
+  --border2:   #4e2a2a;
+  --border3:   #6a3535;
+
+  --r0:         #4a0a0a;
+  --r1:         #7a1212;
+  --r2:         #a81e1e;
+  --r3:         #c93428;
+  --r4:         #e04030;
+  --r5:         #f05040;
+
+  --glow-soft:  rgba(160,28,28,0.18);
+  --glow-mid:   rgba(180,34,34,0.32);
+  --glow-hard:  rgba(200,48,40,0.55);
+
+  --text:  #f0e8e8;
+  --text2: #d4b0b0;
+  --text3: #a87878;
+  --text4: #7a5555;
+  --white: #ffffff;
+
+  --ff-display: 'Bebas Neue', sans-serif;
+  --ff-serif:   'Cormorant Garamond', serif;
+  --ff-ui:      'Syne', sans-serif;
+  --ff-mono:    'DM Mono', monospace;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--ff-ui);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.032'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+}
+
+button { font-family: var(--ff-ui); cursor: pointer; background: none; border: none; }
+
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(28px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity:0; }
+  to   { opacity:1; }
+}
+@keyframes skillIn {
+  from { transform: scaleX(0); transform-origin: left; }
+  to   { transform: scaleX(1); transform-origin: left; }
+}
+@keyframes pulse {
+  0%,100% { opacity:.5; }
+  50%      { opacity:1; }
+}
+@keyframes rotateSlow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.dashboard {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.dashboard::before {
+  content: '';
+  position: fixed; inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 15% 10%,  rgba(120,16,16,0.28) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 50% at 85% 80%,  rgba(90,10,10,0.22)  0%, transparent 55%),
+    radial-gradient(ellipse 40% 40% at 50% 50%,  rgba(60,6,6,0.15)    0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  animation: pulse 8s ease-in-out infinite;
+}
+
+.dash-header {
+  position: relative;
+  z-index: 100;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 56px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(6,4,4,0.7);
+  backdrop-filter: blur(16px);
+}
+
+.dash-header nav {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.dash-header nav a,
+.dash-header nav span {
+  font-family: var(--ff-mono);
+  font-size: 12px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--text3);
+  transition: color .2s;
+  cursor: default;
+}
+
+.dash-header nav span.active { color: var(--r3); }
+
+.nav-divider {
+  width: 1px;
+  height: 14px;
+  background: var(--border2);
+}
+
+.dash-hero {
+  position: relative;
+  z-index: 1;
+  min-height: unset;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 12px 56px 40px;
+}
+
+.hero-orb {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 700px; height: 700px;
+  border-radius: 50%;
+  border: 1px solid rgba(122,18,18,0.12);
+  pointer-events: none;
+}
+
+.hero-orb::before {
+  content: '';
+  position: absolute;
+  inset: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(122,18,18,0.08);
+}
+
+.hero-orb::after {
+  content: '';
+  position: absolute;
+  inset: 110px;
+  border-radius: 50%;
+  border: 1px solid rgba(122,18,18,0.06);
+}
+
+.hero-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  animation: fadeUp .6s ease both;
+}
+
+.hero-mono {
+  font-family: var(--ff-mono);
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text2);
+}
+
+.hero-mono b { color: var(--r3); font-weight: 400; }
+
+.hero-title-block { position: relative; z-index: 2; }
+
+.hero-pre {
+  font-family: var(--ff-mono);
+  font-size: 12px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--r3);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  animation: fadeUp .6s ease .05s both;
+}
+
+.hero-pre::before {
+  content: '';
+  display: block;
+  width: 36px; height: 1px;
+  background: linear-gradient(to right, var(--r2), var(--r4));
+}
+
+.hero-h1 {
+  font-family: var(--ff-serif);
+  font-size: clamp(48px, 13vw, 170px);
+  line-height: .88;
+  letter-spacing: 3px;
+  color: var(--white);
+  animation: fadeUp .65s ease .1s both;
+  position: relative;
+}
+
+.hero-h1 .stroke {
+  display: block;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--border3);
+  background: linear-gradient(90deg, var(--r1) 0%, var(--r3) 40%, transparent 80%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: -webkit-text-stroke .3s;
+  font-style: italic;
+  font-weight: 700;
+}
+
+.hero-bottom {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-top: 24px;
+  gap: 40px;
+  animation: fadeUp .65s ease .2s both;
+}
+
+.hero-desc {
+  font-family: var(--ff-serif);
+  font-size: 18px;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--text2);
+  line-height: 1.7;
+  max-width: 400px;
+}
+
+.hero-stats {
+  display: flex;
+  gap: 0;
+  flex-shrink: 0;
+}
+
+.hero-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 20px 28px;
+  border: 1px solid var(--border2);
+  border-right: none;
+  background: rgba(18,8,8,0.6);
+  backdrop-filter: blur(8px);
+}
+
+.hero-stat:first-child { border-radius: 8px 0 0 8px; }
+.hero-stat:last-child  { border-right: 1px solid var(--border2); border-radius: 0 8px 8px 0; }
+
+.hero-stat-n {
+  font-family: var(--ff-display);
+  font-size: 32px;
+  color: var(--r3);
+  letter-spacing: 1px;
+  line-height: 1;
+}
+
+.hero-stat-l {
+  font-family: var(--ff-mono);
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text4);
+}
+
+.cards-section {
+  position: relative;
+  z-index: 1;
+  padding: 0 56px 100px;
+}
+
+.cards-section::before {
+  content: '';
+  display: block;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--r1) 20%, var(--r3) 50%, var(--r1) 80%, transparent);
+  margin-bottom: 64px;
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.student-card {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform .4s cubic-bezier(.25,.46,.45,.94),
+              border-color .4s ease,
+              box-shadow .4s ease;
+  animation: fadeUp .7s ease both;
+}
+
+.student-card:nth-child(1) { animation-delay:.1s; }
+.student-card:nth-child(2) { animation-delay:.2s; }
+.student-card:nth-child(3) { animation-delay:.3s; }
+
+.student-card::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 90% 60% at 50% 100%, var(--glow-soft), transparent 65%),
+    linear-gradient(160deg, rgba(100,14,14,0.1) 0%, transparent 50%);
+  opacity: .6;
+  transition: opacity .5s;
+  pointer-events: none;
+}
+
+.student-card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--r1), var(--r4), var(--r1));
+  opacity: 0;
+  transition: opacity .4s;
+}
+
+.student-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--border3);
+  box-shadow:
+    0 24px 60px rgba(0,0,0,.5),
+    0 0 40px var(--glow-soft),
+    inset 0 0 30px rgba(100,14,14,0.06);
+}
+
+.student-card:hover::before { opacity: 1; }
+.student-card:hover::after  { opacity: 1; }
+
+.card-glow-ring {
+  position: absolute;
+  bottom: -60px; left: 50%;
+  transform: translateX(-50%);
+  width: 280px; height: 280px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--glow-mid) 0%, transparent 65%);
+  opacity: 0;
+  transition: opacity .5s;
+  pointer-events: none;
+}
+
+.student-card:hover .card-glow-ring { opacity: 1; }
+
+.card-top {
+  padding: 28px 28px 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  position: relative;
+  z-index: 1;
+}
+
+.card-num {
+  font-family: var(--ff-display);
+  font-size: 56px;
+  color: var(--border2);
+  line-height: 1;
+  letter-spacing: -1px;
+  transition: color .4s;
+}
+
+.student-card:hover .card-num { color: rgba(180,40,30,0.3); }
+
+.card-arrow {
+  width: 32px; height: 32px;
+  border: 1px solid var(--border2);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+  color: var(--text4);
+  transition: background .3s, border-color .3s, color .3s, transform .3s;
+}
+
+.student-card:hover .card-arrow {
+  background: var(--r2);
+  border-color: var(--r3);
+  color: var(--white);
+  transform: rotate(45deg);
+}
+
+.card-avatar-area {
+  padding: 16px 28px 0;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  position: relative;
+  z-index: 1;
+}
+
+.card-avatar {
+  width: 54px; height: 54px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border2);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--ff-serif);
+  font-size: 19px;
+  font-weight: 600;
+  color: var(--r3);
+  background: linear-gradient(135deg, var(--surface2), var(--bg3));
+  flex-shrink: 0;
+  transition: border-color .3s, box-shadow .3s;
+}
+
+.student-card:hover .card-avatar {
+  border-color: var(--r2);
+  box-shadow: 0 0 16px rgba(180,40,30,0.3);
+}
+
+.card-name {
+  font-family: var(--ff-serif);
+  font-size: 21px;
+  font-weight: 600;
+  color: var(--white);
+  letter-spacing: -.3px;
+  line-height: 1.2;
+  margin-bottom: 3px;
+}
+
+.card-course-tag {
+  font-family: var(--ff-mono);
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--r3);
+}
+
+.card-bio {
+  padding: 14px 28px;
+  font-size: 15px;
+  color: var(--text3);
+  line-height: 1.68;
+  position: relative;
+  z-index: 1;
+}
+
+.card-skills {
+  padding: 0 28px 18px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  position: relative;
+  z-index: 1;
+}
+
+.skill-chip {
+  font-family: var(--ff-mono);
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 5px 11px;
+  border: 1px solid var(--border2);
+  border-radius: 20px;
+  color: var(--text4);
+  background: rgba(0,0,0,.3);
+  transition: border-color .25s, color .25s, background .25s;
+}
+
+.student-card:hover .skill-chip {
+  border-color: var(--r1);
+  color: var(--text3);
+  background: rgba(100,14,14,0.15);
+}
+
+.card-bottom {
+  padding: 16px 28px 24px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  z-index: 1;
+}
+
+.card-bottom::before {
+  content: '';
+  position: absolute;
+  top: -1px; left: 28px; right: 28px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--r1), transparent);
+  opacity: 0;
+  transition: opacity .4s;
+}
+
+.student-card:hover .card-bottom::before { opacity: 1; }
+
+.card-year-badge {
+  font-family: var(--ff-mono);
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text4);
+}
+
+.card-view-btn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--ff-mono);
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text3);
+  padding: 8px 14px;
+  border: 1px solid var(--border2);
+  border-radius: 20px;
+  transition: color .2s, border-color .2s, background .2s;
+}
+
+.student-card:hover .card-view-btn {
+  color: var(--white);
+  border-color: var(--r3);
+  background: linear-gradient(135deg, var(--r1), var(--r2));
+}
+
+.portfolio {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  animation: fadeIn .4s ease forwards;
+}
+
+.port-nav {
+  height: 60px;
+  padding: 0 56px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(6,4,4,0.85);
+  backdrop-filter: blur(16px);
+  position: sticky;
+  top: 0;
+  z-index: 200;
+}
+
+.back-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--ff-mono);
+  font-size: 13px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text2);
+  transition: color .2s;
+}
+
+.back-btn:hover { color: var(--r3); }
+.back-btn svg { width: 13px; height: 13px; }
+
+.nav-slash { color: var(--border2); }
+
+.nav-crumb {
+  font-family: var(--ff-mono);
+  font-size: 13px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text2);
+}
+
+.nav-crumb span { color: var(--r3); }
+
+.port-band {
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  padding: 72px 56px 64px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 56px;
+  align-items: start;
+  position: relative;
+  overflow: hidden;
+}
+
+.port-band::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 2px;
+  background: linear-gradient(90deg, var(--r1), var(--r4), transparent);
+}
+
+.port-band::after {
+  content: '';
+  position: absolute;
+  bottom: -120px; right: -120px;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, var(--glow-soft) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.port-avatar-big {
+  width: 100px; height: 100px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border2);
+  background: var(--surface2);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--ff-serif);
+  font-size: 28px; font-weight: 600;
+  color: var(--r3);
+  position: relative; flex-shrink: 0;
+}
+
+.port-avatar-big::before {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 1px solid var(--r1);
+  opacity: .35;
+}
+
+.port-tag {
+  font-family: var(--ff-mono);
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--r3);
+  font-weight: 600;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.port-tag::before {
+  content: '';
+  display: block;
+  width: 20px; height: 1px;
+  background: var(--r3);
+}
+
+.port-name-big {
+  font-family: var(--ff-serif);
+  font-size: clamp(40px, 5vw, 60px);
+  font-weight: 600;
+  color: var(--white);
+  letter-spacing: -1.5px;
+  line-height: 1.05;
+  margin-bottom: 8px;
+}
+
+.port-course-label {
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-bottom: 20px;
+}
+
+.port-bio-text {
+  font-size: 14px;
+  color: var(--text2);
+  line-height: 1.8;
+  max-width: 540px;
+}
+
+.port-contacts-col {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 220px;
+}
+
+.contact-row {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 12px; color: var(--text3);
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface);
+  transition: border-color .2s, color .2s;
+}
+
+.contact-row:hover { border-color: var(--r1); color: var(--text2); }
+.contact-row svg { width: 13px; height: 13px; color: var(--r3); flex-shrink: 0; }
+
+.port-body { display: grid; grid-template-columns: 1fr 340px; }
+.port-left { padding: 56px 56px; border-right: 1px solid var(--border); }
+.port-right { padding: 56px 40px; }
+
+.s-head {
+  font-family: var(--ff-mono);
+  font-size: 9px; letter-spacing: 3.5px;
+  text-transform: uppercase;
+  color: var(--text4); font-weight: 600;
+  margin-bottom: 28px;
+  display: flex; align-items: center; gap: 12px;
+}
+.s-head::after { content:''; flex:1; height:1px; background: linear-gradient(to right, var(--border2), transparent); }
+
+.projects-grid { display: flex; flex-direction: column; gap: 16px; margin-bottom: 56px; }
+
+.proj {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 24px;
+  background: var(--surface);
+  position: relative; overflow: hidden;
+  transition: border-color .3s, transform .3s;
+}
+
+.proj::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0; width: 2px;
+  background: linear-gradient(to bottom, var(--r1), var(--r3));
+  opacity: 0;
+  transition: opacity .3s;
+}
+
+.proj:hover { border-color: var(--border2); transform: translateX(5px); }
+.proj:hover::before { opacity: 1; }
+
+.proj-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+
+.proj-title { font-family: var(--ff-serif); font-size: 20px; font-weight: 600; color: var(--white); }
+
+.proj-type {
+  font-family: var(--ff-mono);
+  font-size: 8px; letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--r3);
+  border: 1px solid var(--r1);
+  padding: 4px 9px; border-radius: 3px;
+  background: rgba(122,18,18,0.12);
+  white-space: nowrap;
+}
+
+.proj-desc { font-size: 13px; color: var(--text3); line-height: 1.65; margin-bottom: 14px; }
+
+.proj-tools { display: flex; flex-wrap: wrap; gap: 6px; }
+
+.ptool {
+  font-family: var(--ff-mono);
+  font-size: 9px; padding: 3px 9px;
+  border-radius: 3px;
+  background: var(--bg3);
+  color: var(--text3);
+  border: 1px solid var(--border);
+}
+
+.skills-block { display: flex; flex-direction: column; gap: 18px; }
+
+.sk-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.sk-name { font-size: 12px; font-weight: 600; color: var(--text2); }
+.sk-pct  { font-family: var(--ff-serif); font-size: 16px; color: var(--text3); }
+
+.sk-track { height: 2px; background: var(--border); border-radius: 2px; overflow: hidden; }
+
+.sk-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--r0), var(--r3));
+  border-radius: 2px;
+  animation: skillIn 1s cubic-bezier(.4,0,.2,1) both;
+}
+
+.info-block { margin-bottom: 32px; }
+
+.info-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 12px;
+}
+.info-row:last-child { border-bottom: none; }
+.info-row-label { color: var(--text3); }
+.info-row-val { color: var(--text); font-weight: 600; }
+.highlight-val { color: var(--r3); font-family: var(--ff-serif); font-size: 16px; font-weight: 600; }
+
+.tools-wrap { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.t-badge {
+  display: flex; align-items: center; gap: 6px;
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  padding: 7px 12px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--text3);
+  background: var(--surface);
+  transition: border-color .2s, color .2s;
+}
+.t-badge:hover { border-color: var(--r1); color: var(--text2); }
+.t-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--r3); flex-shrink: 0; }
+
+@media (max-width: 960px) {
+  .dash-header, .port-nav { padding: 0 24px; }
+  .dash-hero { padding: 80px 24px 60px; min-height: auto; }
+  .hero-orb { display: none; }
+  .cards-section { padding: 0 24px 80px; }
+  .cards-grid { grid-template-columns: 1fr; gap: 12px; }
+  .hero-bottom { flex-direction: column; align-items: flex-start; }
+  .port-band { grid-template-columns: 1fr; gap: 28px; padding: 40px 24px; }
+  .port-contacts-col { flex-direction: row; flex-wrap: wrap; }
+  .port-body { grid-template-columns: 1fr; }
+  .port-left { padding: 40px 24px; border-right: none; border-bottom: 1px solid var(--border); }
+  .port-right { padding: 40px 24px; }
+}
+
+/* =========================================================
+   FEATURED ENVELOPE SECTION (GIANT VERSION)
+   ========================================================= */
+
+/* 1. THE OUTER BOX */
+.envelope-wrapper {
+  margin: 60px auto 40px;
+  padding: 40px;
+  max-width: 900px; /* Made the box a bit wider to fit the giant envelope */
+  background: linear-gradient(135deg, var(--surface2), var(--surface));
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+/* 2. THE TEXT INSIDE THE BOX */
+.envelope-info {
+  flex: 1;
+}
+
+.envelope-badge {
+  display: inline-block;
+  font-family: var(--ff-mono);
+  font-size: 13px; /* Slightly bigger text */
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  background: var(--r3);
+  color: var(--white);
+  padding: 6px 14px;
+  border-radius: 20px;
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+
+.envelope-title {
+  font-family: var(--ff-serif);
+  font-size: 2.8rem; /* Bigger title */
+  margin-bottom: 12px;
+  color: var(--text);
+  line-height: 1.1;
+}
+
+.envelope-desc {
+  font-size: 1.1rem;
+  color: var(--text2);
+  line-height: 1.6;
+}
+
+/* 3. THE GIANT ANIMATED ENVELOPE */
+.big-envelope-link {
+  display: block;
+  text-decoration: none;
+  perspective: 1000px;
+  flex-shrink: 0;
+}
+
+.env-visual {
+  position: relative;
+  width: 400px;   /* GIANT Width */
+  height: 280px;  /* GIANT Height */
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.big-envelope-link:hover .env-visual {
+  transform: translateY(-15px) scale(1.05);
+}
+
+/* The letter inside */
+.env-letter {
+  position: absolute;
+  bottom: 20px;
+  left: 10%;
+  width: 80%;
+  height: 220px; /* Giant letter */
+  background: var(--white);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--r2);
+  font-family: var(--ff-serif);
+  font-weight: bold;
+  font-size: 2.8rem; /* Giant text */
+  letter-spacing: 5px;
+  transition: transform 0.4s ease;
+  z-index: 1;
+  box-shadow: 0 -4px 15px rgba(0,0,0,0.2);
+}
+
+/* Slide the letter up on hover */
+.big-envelope-link:hover .env-letter {
+  transform: translateY(-140px); /* Slides up super high */
+}
+
+/* Envelope Front */
+.env-front {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--bg2);
+  border-radius: 16px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--border2);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+}
+
+/* Giant SVG outline icon */
+.env-front svg {
+  width: 200px; /* Giant icon */
+  height: 200px; 
+  color: var(--r3); 
+}
+
+/* Giant Fake Wax Seal */
+.env-wax-seal {
+  position: absolute;
+  width: 70px; /* Giant wax seal */
+  height: 70px; 
+  background: var(--r3);
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  box-shadow: inset 0 0 15px rgba(0,0,0,0.6), 0 5px 10px rgba(0,0,0,0.5);
+}
+
+/* Responsive adjustments for phones */
+@media (max-width: 768px) {
+  .envelope-wrapper {
+    flex-direction: column;
+    text-align: center;
+    padding: 30px 20px;
+    margin: 40px 20px;
+  }
+  
+  /* Scale it down slightly on phones so it doesn't break the screen */
+  .env-visual {
+    width: 280px;
+    height: 196px;
+  }
+  .env-front svg {
+    width: 140px;
+    height: 140px;
+  }
+}
+
+/* =========================================================
+   DASHBOARD LOAD ANIMATIONS & EFFECTS
+   ========================================================= */
+
+/* 1. KEYFRAMES (The animation instructions) */
+@keyframes fadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes breatheOrb {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translate(-50%, -55%) scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.6;
+  }
+}
+
+/* 2. APPLYING ANIMATION TO THE TITLE */
+.hero-title-block {
+  opacity: 0; /* Hide initially */
+  animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* 3. APPLYING THE BREATHING EFFECT TO THE HERO ORB */
+.hero-orb {
+  animation: breatheOrb 8s ease-in-out infinite;
+}
+
+/* 4. STAGGERED ENTRANCE FOR THE STUDENT CARDS */
+.student-card {
+  opacity: 0; /* Hide initially */
+  animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* This makes each card wait a tiny bit longer before appearing! */
+.student-card:nth-child(1) { animation-delay: 0.1s; }
+.student-card:nth-child(2) { animation-delay: 0.25s; }
+.student-card:nth-child(3) { animation-delay: 0.4s; }
+.student-card:nth-child(4) { animation-delay: 0.55s; }
+.student-card:nth-child(5) { animation-delay: 0.7s; }
+.student-card:nth-child(6) { animation-delay: 0.85s; }
+
+/* Let's also animate the Big Envelope so it appears last! */
+.envelope-wrapper {
+  opacity: 0;
+  animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: 0.8s; /* Waits for the cards to finish loading */
+}
+
+/* HOVER EFFECT FOR CARDS */
+.student-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.student-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 30px rgba(201, 52, 40, 0.15); /* Uses your red theme color */
+  border-color: var(--r3);
+}
+
+/* =========================================================
+   LEVEL UP ANIMATIONS (THE "MORE" PACKAGE)
+   ========================================================= */
+
+/* 1. GLOWING PULSE FOR THE ENVELOPE BOX */
+@keyframes pulseGlow {
+  0% { box-shadow: 0 0 0 0 rgba(201, 52, 40, 0.4); }
+  70% { box-shadow: 0 0 30px 15px rgba(201, 52, 40, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(201, 52, 40, 0); }
+}
+
+.envelope-wrapper {
+  /* This adds the breathing red glow to the outer box */
+  animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards, 
+             pulseGlow 3s infinite;
+  animation-delay: 0.8s, 1.8s; /* Waits to load, then starts pulsing */
+}
+
+/* 2. TYPEWRITER EFFECT FOR "Select a member" */
+@keyframes typing {
+  from { width: 0; opacity: 1; }
+  to { width: 180px; opacity: 1; } /* Increased width so the whole word fits! */
+}
+
+@keyframes blinkCursor {
+  from, to { border-right-color: transparent; }
+  50% { border-right-color: var(--r3); } /* Blinking red cursor */
+}
+
+.hero-pre {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 2px solid var(--r3);
+  width: 0;
+  opacity: 0;
+  /* Types out over 1.5 seconds, then cursor keeps blinking */
+  animation: typing 1.5s steps(20, end) forwards,
+             blinkCursor 0.75s step-end infinite;
+  animation-delay: 0.2s; /* Starts right after page load */
+}
+
+/* 3. CONTINUOUS FLOATING FOR THE GIANT ENVELOPE */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+  100% { transform: translateY(0px); }
+}
+
+/* We apply the float to the link, so the hover effect inside still works! */
+.big-envelope-link {
+  animation: float 4s ease-in-out infinite;
+}
+
+/* 4. SHINE SWIPE EFFECT ON THE CARDS */
+@keyframes shine {
+  100% { left: 125%; }
+}
+
+.student-card {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Creates a fast, angled light beam that swipes across the card when you hover */
+.student-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0) 100%);
+  transform: skewX(-25deg);
+  z-index: 10;
+}
+
+.student-card:hover::after {
+  animation: shine 0.7s;
+}
+
+/* =========================================================
+   PRO DESIGN POLISH (TEXTURES, GLASS, & GRADIENTS)
+   ========================================================= */
+
+/* 1. SUBTLE CYBER-GRID BACKGROUND */
+.dashboard {
+  position: relative;
+  z-index: 1;
+}
+
+.dashboard::before {
+  content: '';
+  position: fixed;
+  top: 0; 
+  left: 0; 
+  width: 100vw; 
+  height: 100vh;
+  /* Creates a subtle dot grid using your border color */
+  background-image: radial-gradient(var(--border) 1px, transparent 1px);
+  background-size: 30px 30px;
+  opacity: 0.4;
+  z-index: -1;
+  pointer-events: none; /* Lets you click through it */
+}
+
+/* 2. GLASSMORPHISM STICKY HEADER */
+.dash-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(15, 10, 10, 0.6); /* Semi-transparent dark background */
+  backdrop-filter: blur(12px);       /* Frosted glass blur */
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(201, 52, 40, 0.2); /* Soft red border line */
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* 3. FIRE-GRADIENT HERO TEXT */
+.hero-h1 .stroke {
+  /* Overrides the flat text with a sleek gradient */
+  background: linear-gradient(135deg, var(--r5) 0%, var(--r2) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0px 10px 30px rgba(201, 52, 40, 0.3);
+  -webkit-text-stroke: 0; /* Removes the stroke if you had one so the gradient shines */
+}
+
+/* 4. CUSTOM PREMIUM SCROLLBAR */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg); 
+  border-left: 1px solid var(--border);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border3); 
+  border-radius: 6px;
+  border: 3px solid var(--bg); /* Creates a padded look */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--r3); /* Turns bright red when you hover the scrollbar! */
+}
+
+/* =========================================================
+   LIGHT MODE & THEME TOGGLE STYLES (PREMIUM RED ACCENTS)
+   ========================================================= */
+
+/* Overrides the root variables with a warm, blush-tinted light theme */
+[data-theme="light"] {
+  --bg:        #fdfbf7; /* Brighter, cleaner warm white */
+  --bg2:       #f5f0ea;
+  --bg3:       #ede5dd;
+  --surface:   #ffffff;
+  --surface2:  #fffaf7; /* Slight blush tint */
+  --border:    #e8dcd0;
+  --border2:   #d6c3b3;
+  --border3:   #b89b88;
+
+  /* Refined Reds to pop against light backgrounds */
+  --r0:         #ffe5e5;
+  --r1:         #ffb3b3;
+  --r2:         #f07167; /* Vibrant coral */
+  --r3:         #d62828; /* Strong primary theme red */
+  --r4:         #9e2a2b;
+  --r5:         #540b0e;
+
+  /* Red-tinted glows instead of gray shadows */
+  --glow-soft:  rgba(214, 40, 40, 0.08);
+  --glow-mid:   rgba(214, 40, 40, 0.15);
+  --glow-hard:  rgba(214, 40, 40, 0.25);
+
+  --text:  #2b1c1c; /* Deep espresso brown for softer contrast than pure black */
+  --text2: #5c4343;
+  --text3: #8a6b6b;
+  --text4: #b89c9c;
+  --white: #1a0f0f; /* Makes headers dark */
+}
+
+/* Add smooth transitions to all major elements for the theme swap */
+body, .dashboard, .student-card, .dash-header, .port-band, .proj, .contact-row, .envelope-wrapper, .skill-chip {
+  transition: background 0.5s ease, background-color 0.5s ease, border-color 0.5s ease, color 0.5s ease, box-shadow 0.5s ease;
+}
+
+/* Header Layout & Light Mode Glass */
+.dash-header {
+  justify-content: space-between;
+}
+
+[data-theme="light"] .dash-header {
+  background: rgba(255, 255, 255, 0.65);
+  border-bottom: 1px solid rgba(214, 40, 40, 0.15);
+  box-shadow: 0 10px 30px var(--glow-soft);
+}
+
+/* =========================================================
+   THEME TOGGLE BUTTON (EMOJI CIRCLE)
+   ========================================================= */
+.theme-toggle {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%; 
+  border: 1px solid var(--border2);
+  background: var(--surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px; 
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.theme-toggle:hover {
+  border-color: var(--r3);
+  transform: translateY(-4px) scale(1.1);
+  box-shadow: 0 8px 20px var(--glow-mid);
+}
+
+/* =========================================================
+   PREMIUM LIGHT MODE ENHANCEMENTS (GRADIENTS & SHADOWS)
+   ========================================================= */
+
+/* 1. The Hero Glow - Adds a soft red ambient flare behind the text */
+[data-theme="light"] .hero-orb {
+  background: radial-gradient(circle, var(--r1) 0%, transparent 60%);
+  opacity: 0.6;
+  filter: blur(50px);
+  width: 600px;
+  height: 600px;
+  top: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* 2. Elevated Student Cards with Blush Gradients */
+[data-theme="light"] .student-card {
+  background: linear-gradient(145deg, #ffffff 0%, #fffaf7 100%);
+  box-shadow: 0 8px 24px rgba(214, 40, 40, 0.04), 0 1px 3px rgba(0,0,0,0.02);
+  border: 1px solid rgba(214, 40, 40, 0.1);
+}
+
+[data-theme="light"] .student-card:hover {
+  box-shadow: 0 20px 40px rgba(214, 40, 40, 0.12), 0 5px 15px rgba(214, 40, 40, 0.08);
+  border-color: var(--r2);
+  transform: translateY(-6px);
+}
+
+/* 3. Accent Chips (Skills & Courses) */
+[data-theme="light"] .skill-chip,
+[data-theme="light"] .card-course-tag {
+  background: rgba(214, 40, 40, 0.06);
+  color: var(--r3);
+  border: 1px solid rgba(214, 40, 40, 0.15);
+  font-weight: 600;
+}
+
+[data-theme="light"] .card-num {
+  color: var(--r2);
+  opacity: 0.5;
+}
+
+/* 4. Envelope Wrapper with Red Tint & Depth */
+[data-theme="light"] .envelope-wrapper {
+  background: linear-gradient(135deg, #ffffff 0%, #fff0ed 100%);
+  border: 1px solid rgba(214, 40, 40, 0.2);
+  box-shadow: 0 15px 35px var(--glow-soft);
+}
+
+/* Force the envelope letter to stay white paper in both modes */
+.env-letter {
+  background: #ffffff !important;
+}
+
+/* 5. Clearer Background Dot Grid */
+[data-theme="light"] body::before {
+  background-image: radial-gradient(var(--border2) 1px, transparent 1px);
+  opacity: 0.4;
+}
+
