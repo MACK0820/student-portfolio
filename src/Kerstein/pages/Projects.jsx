@@ -10,7 +10,7 @@ function Projects() {
   const mainProject = {
     title: 'Computer Engineering Department Student Council Uniform Design',
     description: 'A comprehensive design for the CPE-DSC shirt/uniform. Designed with modern aesthetics combining the college brand, tech elements, and department identity. This project showcases my ability to blend technical concepts with creative visual design.',
-    image: '/shirtDesign.jpg',
+    image: '/shirt-design.png',
     tools: ['Canva', 'Photopea'],
     highlights: [
       'Custom color scheme integration',

@@ -167,7 +167,7 @@ function Achievements() {
               initial={{ scale: 0.8 }}
               animate={{ scale: 1 }}
               exit={{ scale: 0.8 }}
-              src="/aoc2025.jpg"
+              src={selectedCert}
               alt="Fullscreen Certificate"
               style={{
                 maxWidth: '90%',

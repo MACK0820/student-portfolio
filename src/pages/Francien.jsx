@@ -59,7 +59,7 @@ export default function WildPortfolio() {
   ]
   const seminars = [
     { name: 'Cyber-Aware, Cyber-Safe: Strengthening Our Digital Defenses', date: 'October 8, 2024', org: 'COESS TIP Manila' },
-    { name: 'Computer Engineering Elective Seminar', date: 'February 14, 2026', org: 'COESS TIP Manila' },
+    { name: 'Computer Engineering Elective Seminar', date: 'November 7, 2025', org: 'COESS TIP Manila' },
     { name: 'Cyberbullying Webinar', date: 'March 20, 2023', org: 'School-sponsored' },
     { name: 'Mental Health Webinar', date: 'November 10, 2023', org: 'School-sponsored' },
     { name: 'Building Self-Confidence', date: 'January 12, 2024', org: 'School-sponsored' },
@@ -195,13 +195,13 @@ export default function WildPortfolio() {
   ]
 
   const navigation = [
-    { id: 'hero', label: 'START', symbol: '⚡' },
-    { id: 'about', label: 'ABOUT', symbol: '🎯' },
-    { id: 'journey', label: 'JOURNEY', symbol: '🚀' },
-    { id: 'achievements', label: 'ACHIEVEMENTS', symbol: '🏆' },
-    { id: 'extras', label: 'EXTRAS', symbol: '⚙️' },
-    { id: 'projects', label: 'PROJECTS', symbol: '💻' },
-    { id: 'connect', label: 'CONNECT', symbol: '💬' },
+    { id: 'hero', label: 'START'},
+    { id: 'about', label: 'ABOUT'},
+    { id: 'journey', label: 'JOURNEY'},
+    { id: 'achievements', label: 'ACHIEVEMENTS'},
+    { id: 'extras', label: 'EXTRAS'},
+    { id: 'projects', label: 'PROJECTS'},
+    { id: 'connect', label: 'CONNECT'},
   ]
 
   const renderSection = () => {
