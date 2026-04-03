@@ -6,6 +6,7 @@ export default function WildPortfolio() {
   const isDark = theme === 'dark'
   const [profilePic] = useState('/hkfrancien.jpeg')
   const [isMobile, setIsMobile] = useState(window.innerWidth < 900)
+  const [selectedImage, setSelectedImage] = useState(null);
 
   const themeStyles = {
     bodyBackground: isDark
@@ -282,13 +283,20 @@ export default function WildPortfolio() {
         )}
 
         {/* NAV BUTTONS */}
-        <div style={{ display: 'flex', flexDirection: isMobile ? 'row' : 'column', gap: '12px', paddingRight: isMobile ? '16px' : '24px' }}>
+        <div style={{ 
+          display: 'flex', 
+          flexDirection: isMobile ? 'row' : 'column', 
+          gap: isMobile ? '8px' : '12px', 
+          paddingRight: isMobile ? '16px' : '24px',
+          overflowX: isMobile ? 'auto' : 'visible', 
+          paddingBottom: isMobile ? '10px' : '0'
+        }}>
           {navigation.map((nav) => (
             <button
               key={nav.id}
               onClick={() => setActiveSection(nav.id)}
               style={{
-                padding: isMobile ? '12px 14px' : '16px 20px',
+                padding: isMobile ? '10px 16px' : '16px 20px', 
                 background: activeSection === nav.id 
                   ? 'linear-gradient(135deg, rgba(218, 160, 48, 0.3), rgba(218, 160, 48, 0.1))'
                   : 'transparent',
@@ -299,37 +307,26 @@ export default function WildPortfolio() {
                 color: activeSection === nav.id ? themeStyles.accent : themeStyles.muted,
                 fontFamily: "'Syne', sans-serif",
                 fontWeight: 600,
-                fontSize: isMobile ? '11px' : '13px',
-                letterSpacing: '1.5px',
+                fontSize: isMobile ? '10px' : '13px', 
+                letterSpacing: '1px',
                 textTransform: 'uppercase',
                 cursor: 'pointer',
                 transition: 'all 0.3s ease',
                 textAlign: 'left',
                 display: 'flex',
                 alignItems: 'center',
-                gap: isMobile ? '6px' : '12px',
+                gap: '8px', 
                 marginLeft: isMobile ? '0' : '24px',
                 animation: activeSection === nav.id ? 'pulse-big 2s ease-in-out infinite' : 'none',
-                whiteSpace: 'nowrap',
+                whiteSpace: 'nowrap', 
                 flexShrink: 0
               }}
-              onMouseEnter={(e) => {
-                if (activeSection !== nav.id) {
-                  e.currentTarget.style.borderColor = 'rgba(218, 160, 48, 0.5)'
-                  e.currentTarget.style.color = '#daa030'
-                  e.currentTarget.style.transform = 'translateX(4px)'
-                }
-              }}
-              onMouseLeave={(e) => {
-                if (activeSection !== nav.id) {
-                  e.currentTarget.style.borderColor = 'rgba(218, 160, 48, 0.2)'
-                  e.currentTarget.style.color = '#b888b0'
-                  e.currentTarget.style.transform = 'translateX(0)'
-                }
-              }}
             >
-              <span style={{ fontSize: '18px' }}>{nav.symbol}</span>
-              {!isMobile && <span>{nav.label}</span>}
+              <span style={{ fontSize: isMobile ? '14px' : '18px' }}>{nav.symbol}</span>
+              
+              {/* REMOVED !isMobile so label always shows */}
+              <span>{nav.label}</span> 
+              
             </button>
           ))}
         </div>
@@ -393,7 +390,8 @@ function HeroSection({ setActiveSection, profilePic, isMobile, themeStyles, isDa
   return (
     <div style={{
       minHeight: '100vh',
-      display: 'grid',
+      display: isMobile ? 'flex' : 'grid',
+      flexDirection: isMobile ? 'column' : 'row',
       gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
       alignItems: 'center',
       padding: isMobile ? '100px 24px 40px 24px' : '80px 120px',
@@ -412,8 +410,13 @@ function HeroSection({ setActiveSection, profilePic, isMobile, themeStyles, isDa
         pointerEvents: 'none'
       }} />
 
-      {/* LEFT - TEXT */}
-      <div style={{ position: 'relative', zIndex: 2 }}>
+      {/* LEFT - TEXT SECTION (Order 2 on mobile to be below photo) */}
+      <div style={{ 
+        position: 'relative', 
+        zIndex: 2, 
+        order: isMobile ? 2 : 1,
+        width: '100%' 
+      }}>
         <div style={{ marginBottom: '32px' }}>
           <div style={{
             fontSize: isMobile ? '12px' : '14px',
@@ -568,30 +571,32 @@ function HeroSection({ setActiveSection, profilePic, isMobile, themeStyles, isDa
         </div>
       </div>
 
-      {/* RIGHT - WILD PHOTO DISPLAY */}
-      {!isMobile && (
+      {/* RIGHT - WILD PHOTO DISPLAY (Order 1 on mobile to be on top) */}
         <div style={{
+          flex: 1,
           position: 'relative',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          height: '750px',
-          animation: 'slide-in-right 0.8s ease-out'
+          height: isMobile ? '400px' : '750px', 
+          animation: 'slide-in-right 0.8s ease-out',
+          width: '100%',
+          order: isMobile ? 1 : 2
         }}>
           <div style={{
             position: 'absolute',
-            width: '550px',
-            height: '550px',
+            width: isMobile ? '320px' : '550px',
+            height: isMobile ? '320px' : '550px',
             background: 'linear-gradient(135deg, rgba(218, 160, 48, 0.15), rgba(218, 160, 48, 0.05))',
             borderRadius: '20px',
             transform: 'rotate(15deg)',
-            boxShadow: '0 0 60px rgba(218, 160, 48, 0.2)'
+            boxShadow: '0 0 60px rgba(132, 114, 80, 0.2)'
           }} />
 
           <div style={{
             position: 'absolute',
-            width: '380px',
-            height: '380px',
+            width: isMobile ? '220px' : '380px',
+            height: isMobile ? '220px' : '380px',
             background: 'linear-gradient(135deg, rgba(218, 160, 48, 0.1), transparent)',
             border: '2px solid rgba(218, 160, 48, 0.3)',
             borderRadius: '20px',
@@ -601,8 +606,8 @@ function HeroSection({ setActiveSection, profilePic, isMobile, themeStyles, isDa
           {/* IMAGE FRAME */}
           <div style={{
             position: 'relative',
-            width: '480px',
-            height: '620px',
+            width: isMobile ? '540px' : '480px',
+            height: isMobile ? '540px' : '620px',
             borderRadius: '16px',
             overflow: 'hidden',
             border: '3px solid rgba(218, 160, 48, 0.5)',
@@ -639,10 +644,10 @@ function HeroSection({ setActiveSection, profilePic, isMobile, themeStyles, isDa
               left: 0,
               right: 0,
               background: 'linear-gradient(to top, rgba(15, 10, 15, 0.9), transparent)',
-              padding: '32px',
+              padding: isMobile ? '16px' : '32px',
               color: themeStyles.bodyColor
             }}>
-              <div style={{ fontSize: '18px', fontWeight: 600 }}>Exploring the World</div>
+              <div style={{ fontSize: isMobile ? '14px' : '18px', fontWeight: 600 }}>Exploring the World</div>
             </div>
           </div>
 
@@ -654,7 +659,7 @@ function HeroSection({ setActiveSection, profilePic, isMobile, themeStyles, isDa
             background: 'linear-gradient(135deg, #daa030, transparent)',
             borderRadius: '50%',
             bottom: '20px',
-            right: '-40px',
+            right: isMobile ? '0px' : '-40px',
             opacity: 0.3
           }} />
 
@@ -665,10 +670,9 @@ function HeroSection({ setActiveSection, profilePic, isMobile, themeStyles, isDa
             border: '2px solid rgba(218, 160, 48, 0.4)',
             borderRadius: '50%',
             top: '20px',
-            left: '-30px'
+            left: isMobile ? '0px' : '-30px'
           }} />
         </div>
-      )}
     </div>
   )
 }
@@ -2548,54 +2552,59 @@ function ContactAndReferencesSection({ isMobile, themeStyles }) {
           }} />
 
           {/* REFERENCES SECTION */}
-          <h3 style={{
-            fontSize: isMobile ? '22px' : '26px',
-            fontWeight: 800,
-            marginBottom: '24px',
-            fontFamily: "'Space Grotesk', sans-serif",
-            color: themeStyles.bodyColor,
-            textAlign: 'left',
-            animation: 'fade-up 0.6s ease-out backwards', animationDelay: '1.0s'
+          <div style={{ 
+            display: 'grid', 
+            gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, minmax(0, 1fr))', 
+            gap: '20px', 
+            textAlign: 'left' 
           }}>
-            REFERENCES
-          </h3>
-
-          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, minmax(0, 1fr))', gap: '24px', textAlign: 'left' }}>
             {references.map((ref, index) => (
               <div key={index} style={{
                 background: 'linear-gradient(135deg, rgba(218, 160, 48, 0.08), rgba(218, 160, 48, 0.02))',
                 border: '2px solid rgba(218, 160, 48, 0.2)',
                 borderRadius: '16px',
-                overflow: 'hidden',
                 display: 'flex',
-                flexDirection: isMobile ? 'column' : 'row',
-                gap: '20px',
-                padding: '24px',
+                flexDirection: 'row', 
+                alignItems: 'center',
+                gap: '16px',
+                padding: isMobile ? '16px' : '20px', 
+                maxWidth: isMobile ? '100%' : '480px', 
                 transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)', 
                 animation: 'fade-up 0.6s ease-out backwards',
                 animationDelay: `${1.1 + (index * 0.2)}s` 
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.borderColor = 'rgba(218, 160, 48, 0.6)';
-                e.currentTarget.style.transform = 'translateY(-6px) scale(1.02)';
-                e.currentTarget.style.boxShadow = '0 12px 30px rgba(218, 160, 48, 0.15)';
+                e.currentTarget.style.transform = 'translateY(-4px)';
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.borderColor = 'rgba(218, 160, 48, 0.2)';
-                e.currentTarget.style.transform = 'translateY(0) scale(1)';
-                e.currentTarget.style.boxShadow = 'none';
+                e.currentTarget.style.transform = 'translateY(0)';
               }}>
-                <img src={ref.profile} alt={ref.name} style={{ width: isMobile ? '100%' : '120px', height: '120px', objectFit: 'cover', borderRadius: '14px', transition: 'transform 0.5s ease' }} 
-                     onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'} 
-                     onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}/>
-                <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '12px' }}>
-                  <div>
-                    <div style={{ fontSize: '16px', fontWeight: 800, color: themeStyles.bodyColor, marginBottom: '4px' }}>{ref.name}</div>
-                    <div style={{ fontSize: '12px', color: '#daa030', fontWeight: 700, marginBottom: '6px' }}>{ref.title}</div>
-                    <div style={{ fontSize: '12px', color: themeStyles.muted, lineHeight: 1.5 }}>{ref.relation} · {ref.company}</div>
+                <img 
+                  src={ref.profile} 
+                  alt={ref.name} 
+                  style={{ 
+                    width: isMobile ? '70px' : '90px',  
+                    height: isMobile ? '70px' : '90px', 
+                    objectFit: 'contain',              
+                    background: 'rgba(218, 160, 48, 0.05)',
+                    borderRadius: '10px', 
+                    flexShrink: 0 
+                  }} 
+                />
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                  <div style={{ fontSize: isMobile ? '14px' : '16px', fontWeight: 800, color: themeStyles.bodyColor }}>
+                    {ref.name}
                   </div>
-                  <div style={{ display: 'grid', gap: '6px' }}>
-                    <div style={{ fontSize: '12px', color: themeStyles.bodyColor }}><strong>Email:</strong> {ref.email}</div>
+                  <div style={{ fontSize: '11px', color: '#daa030', fontWeight: 700, lineHeight: 1.2 }}>
+                    {ref.title}
+                  </div>
+                  <div style={{ fontSize: '10px', color: themeStyles.muted, lineHeight: 1.3 }}>
+                    {ref.company}
+                  </div>
+                  <div style={{ fontSize: '10px', color: themeStyles.bodyColor, marginTop: '4px', wordBreak: 'break-all' }}>
+                    <strong>Email:</strong> {ref.email}
                   </div>
                 </div>
               </div>

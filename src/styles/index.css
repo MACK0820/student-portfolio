@@ -1339,3 +1339,23 @@ body, .dashboard, .student-card, .dash-header, .port-band, .proj, .contact-row, 
   opacity: 0.4;
 }
 
+/* Mobile adjustments for the Wedding Project section */
+@media (max-width: 768px) {
+  .envelope-wrapper {
+    display: flex;
+    flex-direction: column; /* Stacks text on top, envelope on bottom */
+    align-items: center;
+    gap: 40px;             /* Creates space between text and the envelope */
+    padding-top: 60px;     /* Extra space from the cards above */
+    text-align: center;
+  }
+
+  .envelope-info {
+    margin-bottom: 20px;   /* Ensures the sentence has breathing room */
+  }
+
+  .big-envelope-link {
+    transform: scale(0.9); /* Slightly smaller envelope to fit mobile screens */
+    margin-top: 20px;      /* Pushes the actual visual lower */
+  }
+}

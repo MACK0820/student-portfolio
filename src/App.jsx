@@ -2,13 +2,13 @@ import React, { useState } from 'react'
 import Dashboard from './components/Dashboard'
 import students from './data/students'
 
-import Rafael from './pages/Rafael.jsx'
+import Maryneil from './pages/Maryneil.jsx'
 import Francien from './pages/Francien.jsx'
 import KersteinPortfolio from './Kerstein/KersteinPortfolio.jsx'
 
 const PAGE_MAP = {
   s1: Francien,
-  s2: Rafael,
+  s2: Maryneil,
   s3: KersteinPortfolio
 }
 

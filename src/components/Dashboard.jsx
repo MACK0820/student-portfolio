@@ -46,7 +46,7 @@ function Dashboard({ students, onSelect }) {
         <div className="hero-orb orb-2" />
 
         <div className="hero-top fade-up-stagger">
-          <span className="hero-mono">Group 4 <b>Portfolio</b></span>
+          <span className="hero-mono">Group 4 </span>
         </div>
 
         <div className="hero-title-block">
