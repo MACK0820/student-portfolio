@@ -1,87 +1,111 @@
-# Portfolio Dashboard
-### CPE408A – Emerging Technologies 1 in CpE
+# 🖥️ Portfolio Dashboard  
+### CPE408A – Emerging Technologies 1 in CpE  
 **Technological Institute of the Philippines – Manila**
 
-A unified portfolio dashboard showcasing the academic backgrounds, 
-technical skills, projects, and achievements of three Computer 
-Engineering students in one cohesive web application.
+A unified portfolio dashboard showcasing the academic backgrounds, technical skills, projects, and achievements of three Computer Engineering students in one cohesive web application.
 
 ---
 
-## Members
-- Francien Nicole E. Ausan
-- Maryneil G. Co
-- Kerstein Ashby C. San Pedro
+## 👥 Members
+- Francien Nicole E. Ausan  
+- Maryneil G. Co  
+- Kerstein Ashby C. San Pedro  
 
-**Instructor:** Engr. Adrian Dave E. Ignacio
+**Instructor:** Engr. Adrian Dave E. Ignacio  
 
 ---
 
-## 🔗 Live Demo
+## 🔗 Live Demo  
 [Insert deployment URL here]
 
 ---
 
-## 📌 About
-This portfolio dashboard presents three individually designed personal 
-portfolio pages, each containing:
-- Academic autobiography
-- Academic background and educational history
-- Technical skills categorized by domain
-- Completed projects with descriptions
-- Certifications, achievements, and awards
-- Seminars and training attended
-- Contact information
+## 📌 About  
+This portfolio dashboard presents three individually designed personal portfolio pages, each containing:
+
+- Academic autobiography  
+- Academic background and educational history  
+- Technical skills categorized by domain  
+- Completed projects with descriptions  
+- Certifications, achievements, and awards  
+- Seminars and training attended  
+- Contact information  
 
 ---
 
-## 🛠️ Tech Stack
+## 🛠️ Tech Stack  
+
 | Technology | Purpose |
 |---|---|
-| React.js (v18) | Frontend framework |
-| React Router | Page navigation |
-| React Context API | State management |
-| Tailwind CSS | Styling & responsive layout |
-| Figma | UI/UX design & wireframing |
+| React.js (v18) | Frontend framework for building UI components |
+| React Hooks | State and lifecycle management (`useState`, `useEffect`, `useRef`) |
+| Context API | Global state management |
+| CSS (Custom Styling) | Layout, design, and responsiveness |
+| Vite | Development server and build tool |
+| Figma | UI/UX design and wireframing |
 
 ---
 
-## ✨ Features
-- 🧑‍💼 Three individually designed portfolio pages
-- 📖 Detailed academic autobiography per member
-- 🛠️ Skills, projects, certifications & achievements
-- 📱 Fully responsive across all devices
-- ♿ Accessible — semantic HTML & ARIA labels
+## ✨ Features  
+
+- 🧑‍💼 Three individually designed portfolio pages  
+- 📖 Detailed academic autobiography per member  
+- 🛠️ Skills, projects, certifications, and achievements display  
+- ⚡ Dynamic rendering using React state management  
+- 🎯 Component-based modular design  
+- 📱 Responsive layout for different screen sizes  
+- ♿ Basic accessibility using semantic HTML  
 
 ---
 
-## 🚀 Getting Started
+## 🧠 Advanced Implementation  
 
-### Prerequisites
-- Node.js v14.0 or higher
-- npm
-- Git
+- **Context API for Global State Management**  
+  Enables efficient sharing of data across components without prop drilling  
 
-### Installation
+- **React Hooks Integration**  
+  Handles dynamic updates and lifecycle behavior of components  
+
+- **Component Reusability**  
+  Promotes clean structure and easier maintenance  
+
+---
+
+## 🚀 Getting Started  
+
+### Prerequisites  
+- Node.js v14.0 or higher  
+- npm  
+- Git  
+
+---
+
+### Installation  
 
 **1. Clone the repository**
 ```bash
-git clone https://github.com/[your-username]/[repo-name].git
-cd [repo-name]
-```
+git clone https://github.com/MACK0820/student-portfolio.git
+cd [student-portfolio]
+````
 
 **2. Install dependencies**
+
 ```bash
 npm install
 ```
 
 **3. Start the development server**
+
 ```bash
-npm start
+npm run dev
 ```
-Open **http://localhost:3000** in your browser.
+
+Open **[http://localhost:5173](http://localhost:5173)** in your browser.
+
+---
 
 **4. Build for production**
+
 ```bash
 npm run build
 ```
@@ -89,12 +113,30 @@ npm run build
 ---
 
 ## 📁 Folder Structure
+
 ```
 src/
  ├── components/    # Reusable UI components
  ├── pages/         # Individual portfolio pages
  ├── assets/        # Images and static files
- ├── styles/        # Global styles & Tailwind config
- ├── App.jsx        # Root component with routing
+ ├── styles/        # Global CSS files
+ ├── App.jsx        # Root component (no routing used)
  └── main.jsx       # Entry point
 ```
+
+---
+
+## ⚠️ Notes
+
+* The application does **not use React Router**; navigation is handled through component rendering.
+* Tailwind CSS is **not used**; styling is implemented using custom CSS.
+* The system is **fully frontend-based** with no backend integration.
+
+---
+
+## 📄 License
+
+This project is for academic purposes only.
+
+```
+
