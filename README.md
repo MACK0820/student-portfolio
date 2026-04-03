@@ -16,7 +16,7 @@ A unified portfolio dashboard showcasing the academic backgrounds, technical ski
 ---
 
 ## 🔗 Live Demo  
-[Insert deployment URL here]
+[https://student-portfolio-zeta.vercel.app/)]
 
 ---
 
