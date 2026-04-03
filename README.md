@@ -42,7 +42,6 @@ This portfolio dashboard presents three individually designed personal portfolio
 | Context API | Global state management |
 | CSS (Custom Styling) | Layout, design, and responsiveness |
 | Vite | Development server and build tool |
-| Figma | UI/UX design and wireframing |
 
 ---
 
@@ -137,6 +136,4 @@ src/
 ## 📄 License
 
 This project is for academic purposes only.
-
-```
 
