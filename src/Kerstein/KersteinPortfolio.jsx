@@ -7,6 +7,7 @@ import Projects from './pages/Projects.jsx'
 import References from './pages/References.jsx'
 import './kerstein.css'
 import { ThemeProvider } from "./context/ThemeContext.jsx";
+window.history.scrollRestoration = "manual";
 
 function KersteinPortfolio() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })

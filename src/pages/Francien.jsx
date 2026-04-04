@@ -245,34 +245,28 @@ export default function WildPortfolio() {
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: rgba(218, 160, 48, 0.4); border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: rgba(218, 160, 48, 0.7); }
-        @keyframes pulse-big { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.02); } }
-        @keyframes float-wild { 0%, 100% { transform: translateY(0px) rotate(0deg); } 33% { transform: translateY(-30px) rotate(1deg); } 66% { transform: translateY(-15px) rotate(-1deg); } }
-        @keyframes slide-in-left { from { opacity: 0; transform: translateX(-50px); } to { opacity: 1; transform: translateX(0); } }
-        @keyframes slide-in-right { from { opacity: 0; transform: translateX(50px); } to { opacity: 1; transform: translateX(0); } }
-        @keyframes fade-up { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
       `}</style>
 
       {/* LEFT SIDE NAVIGATION PANEL */}
       <div style={{
         width: isMobile ? '100%' : '280px',
+        minWidth: isMobile ? '100%' : '280px',
         background: themeStyles.surface,
         borderRight: isMobile ? 'none' : `2px solid ${themeStyles.surfaceBorder}`,
         borderBottom: isMobile ? `2px solid ${themeStyles.surfaceBorder}` : 'none',
         backdropFilter: 'blur(10px)',
-        padding: isMobile ? '16px' : '40px 0',
+        padding: isMobile ? '12px 16px' : '40px 0',
         display: 'flex',
-        flexDirection: isMobile ? 'row' : 'column',
-        justifyContent: isMobile ? 'space-between' : 'flex-start',
-        alignItems: isMobile ? 'center' : 'stretch',
-        position: isMobile ? 'relative' : 'sticky',
-        top: 0,
-        overflowY: isMobile ? 'hidden' : 'auto',
-        overflowX: isMobile ? 'auto' : 'hidden',
+        flexDirection: 'column', 
+        position: isMobile ? 'fixed' : 'sticky',
+        top: isMobile ? '50px' : '0',
+        height: isMobile ? 'auto' : '100vh',
         zIndex: 100
       }}>
+        
         {/* BRAND */}
         {!isMobile && (
-          <div style={{ padding: '0 24px', marginBottom: '60px' }}>
+          <div style={{ padding: '0 24px', marginBottom: '40px' }}>
             <div style={{ fontSize: '32px', fontWeight: 800, color: themeStyles.bodyColor, marginBottom: '4px', fontFamily: "'Space Grotesk', sans-serif" }}>
               PORTFOLIO
             </div>
@@ -283,95 +277,106 @@ export default function WildPortfolio() {
         )}
 
         {/* NAV BUTTONS + TOGGLE WRAPPER */}
-        <div style={{ 
-          display: 'flex', 
-          flexDirection: isMobile ? 'row' : 'column', 
-          alignItems: 'center', // Aligns toggle and buttons vertically center
-          gap: isMobile ? '12px' : '16px', 
-          padding: isMobile ? '10px 20px' : '0 24px',
-          overflowX: isMobile ? 'auto' : 'visible',
+        <div style={{
+          display: 'flex',
+          flexDirection: isMobile ? 'row' : 'column',
+          gap: '12px',
+          padding: isMobile ? '10px 0' : '0 20px',
           width: '100%',
-          scrollbarWidth: 'none'
+          boxSizing: 'border-box',
+          overflowX: isMobile ? 'auto' : 'visible',
+          overflowY: 'hidden',
+          scrollBehavior: 'smooth',
+          WebkitOverflowScrolling: 'touch',
+          alignItems: isMobile ? 'stretch' : 'center',
+          justifyContent: isMobile ? 'flex-start' : 'center'
         }}>
-          
-          {/* The Navigation Buttons */}
           {navigation.map((nav) => (
             <button
               key={nav.id}
               onClick={() => setActiveSection(nav.id)}
               style={{
-                padding: isMobile ? '10px 16px' : '16px 20px',
-                background: activeSection === nav.id 
+                padding: '16px 20px',
+                minWidth: isMobile ? '120px' : '100%',
+                width: isMobile ? '120px' : '100%',
+                height: isMobile ? '60px' : 'auto',
+                background: activeSection === nav.id
                   ? 'linear-gradient(135deg, rgba(218, 160, 48, 0.3), rgba(218, 160, 48, 0.1))'
                   : 'transparent',
                 border: activeSection === nav.id
-                  ? '2px solid rgba(218, 160, 48, 0.6)'
+                  ? `2px solid ${themeStyles.accent}`
                   : '2px solid rgba(218, 160, 48, 0.2)',
-                borderRadius: '8px',
+                borderRadius: '12px',
                 color: activeSection === nav.id ? themeStyles.accent : themeStyles.muted,
                 fontSize: isMobile ? '11px' : '13px',
+                fontWeight: '700',
                 textTransform: 'uppercase',
-                whiteSpace: 'nowrap',
+                whiteSpace: isMobile ? 'normal' : 'nowrap',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '8px',
-                flexShrink: 0 // Stops the button from squishing
+                justifyContent: 'center',
+                gap: '12px',
+                cursor: 'pointer',
+                transition: 'all 0.3s ease',
+                wordWrap: 'break-word',
+                lineHeight: isMobile ? 1.2 : 'normal',
+                flexShrink: 0
               }}
             >
-              <span style={{ fontSize: isMobile ? '16px' : '18px' }}>{nav.symbol}</span>
               <span>{nav.label}</span>
             </button>
           ))}
 
-          {/* THE THEME TOGGLE (Now lined up at the end of the row) */}
           <button 
             onClick={() => setTheme(isDark ? 'light' : 'dark')}
             style={{
+              marginTop: isMobile ? 0 : 'auto',
+              marginBottom: isMobile ? 0 : 'auto',
               background: 'rgba(218, 160, 48, 0.1)',
               border: '1px solid rgba(218, 160, 48, 0.4)',
               borderRadius: '50%',
-              width: isMobile ? '40px' : '45px',
-              height: isMobile ? '40px' : '45px',
+              width: '45px',
+              height: '45px',
+              minWidth: isMobile ? '45px' : 'auto',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               cursor: 'pointer',
-              fontSize: '18px',
-              flexShrink: 0, // Prevents it from hiding
-              marginLeft: isMobile ? '8px' : '0',
-              marginTop: isMobile ? '0' : '20px' // Space it out on PC
+              flexShrink: 0
             }}
           >
             {isDark ? '☀️' : '🌙'}
           </button>
         </div>
 
-        {/* FOOTER TEXT IN NAV */}
+        {/* FOOTER */}
         {!isMobile && (
           <div style={{ 
             marginTop: 'auto', 
-            padding: '24px 24px 32px 24px', /* Added bottom padding so it doesn't hug the screen edge */
-            borderTop: '1px solid rgba(218, 160, 48, 0.2)' 
+            padding: '24px', 
+            borderTop: `1px solid ${themeStyles.surfaceBorder}` 
           }}>
-            <div style={{ 
-              fontSize: '13px', /* Slightly smaller looks cleaner for a footer */
-              color: themeStyles.muted, /* Using muted text makes it subtle and elegant */
-              lineHeight: 1.6,
-              letterSpacing: '1px',
-              fontWeight: 600
-            }}>
-              <p style={{ margin: 0 }}>© 2026.</p>
+            <div style={{ fontSize: '13px', color: themeStyles.muted, fontWeight: 600 }}>
+              <p>© 2026.</p>
             </div>
           </div>
         )}
-      </div>
+      </div> {/* This closes LEFT SIDE NAVIGATION PANEL */}
 
-      {/* MAIN CONTENT */}
-      <div style={{ flex: 1, overflow: 'auto', position: 'relative' }}>
+      {/* MAIN CONTENT AREA */}
+      <div style={{ 
+        flex: 1, 
+        height: isMobile ? 'auto' : '100vh', 
+        overflowY: 'auto', 
+        position: 'relative',
+        width: isMobile ? '100%' : 'auto',
+        paddingTop: isMobile ? '120px' : '0',
+      }}>
         {renderSection()}
       </div>
-    </div>
-  )
+
+    </div> // This closes the main flex container from the top of return()
+  );
 }
 
 function HeroSection({ setActiveSection, profilePic, isMobile, themeStyles, isDark }) {
@@ -484,7 +489,7 @@ function HeroSection({ setActiveSection, profilePic, isMobile, themeStyles, isDa
         </div>
 
         {/* QUICK STATS */}
-        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: isMobile ? '16px' : '26px', marginTop: isMobile ? '40px' : '100px', maxWidth: '640px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(150px, 1fr))', gap: isMobile ? '16px' : '26px', marginTop: isMobile ? '40px' : '100px', maxWidth: '100%' }}>
           <div style={{
             padding: isMobile ? '32px 22px' : '34px 24px',
             background: 'linear-gradient(135deg, rgba(218, 160, 48, 0.1), rgba(218, 160, 48, 0.05))',
@@ -762,31 +767,35 @@ function AboutSection({ isMobile, themeStyles }) {
         `}
       </style>
 
-      {/* AMBIENT BACKGROUND ORBS */}
-      <div style={{
-        position: 'absolute',
-        top: '10%',
-        left: '10%',
-        width: '400px',
-        height: '400px',
-        background: isDark ? 'radial-gradient(circle, rgba(218, 160, 48, 0.15) 0%, transparent 70%)' : 'radial-gradient(circle, rgba(230, 115, 0, 0.15) 0%, transparent 70%)',
-        filter: 'blur(60px)',
-        zIndex: 0,
-        animation: 'floatOrb1 20s infinite ease-in-out',
-        pointerEvents: 'none'
-      }} />
-      <div style={{
-        position: 'absolute',
-        bottom: '20%',
-        right: '20%',
-        width: '350px',
-        height: '350px',
-        background: isDark ? 'radial-gradient(circle, rgba(184, 136, 176, 0.1) 0%, transparent 70%)' : 'radial-gradient(circle, rgba(59, 89, 152, 0.1) 0%, transparent 70%)',
-        filter: 'blur(60px)',
-        zIndex: 0,
-        animation: 'floatOrb2 25s infinite ease-in-out reverse',
-        pointerEvents: 'none'
-      }} />
+      {/* AMBIENT BACKGROUND ORBS - Hidden on Mobile/iPad */}
+      {!isMobile && (
+        <>
+          <div style={{
+            position: 'absolute',
+            top: '10%',
+            left: '10%',
+            width: '400px',
+            height: '400px',
+            background: isDark ? 'radial-gradient(circle, rgba(218, 160, 48, 0.15) 0%, transparent 70%)' : 'radial-gradient(circle, rgba(230, 115, 0, 0.15) 0%, transparent 70%)',
+            filter: 'blur(60px)',
+            zIndex: 0,
+            animation: 'floatOrb1 20s infinite ease-in-out',
+            pointerEvents: 'none'
+          }} />
+          <div style={{
+            position: 'absolute',
+            bottom: '20%',
+            right: '20%',
+            width: '350px',
+            height: '350px',
+            background: isDark ? 'radial-gradient(circle, rgba(184, 136, 176, 0.1) 0%, transparent 70%)' : 'radial-gradient(circle, rgba(59, 89, 152, 0.1) 0%, transparent 70%)',
+            filter: 'blur(60px)',
+            zIndex: 0,
+            animation: 'floatOrb2 25s infinite ease-in-out reverse',
+            pointerEvents: 'none'
+          }} />
+        </>
+      )}
 
       {/* MAIN CONTENT */}
       <div style={{ flex: 1, maxWidth: '900px', zIndex: 1 }}>
@@ -1042,31 +1051,35 @@ function JourneySection({ education, isMobile, themeStyles }) {
         `}
       </style>
 
-      {/* AMBIENT BACKGROUND ORBS */}
-      <div style={{
-        position: 'absolute',
-        top: '15%',
-        right: '10%',
-        width: '400px',
-        height: '400px',
-        background: isDark ? 'radial-gradient(circle, rgba(218, 160, 48, 0.08) 0%, transparent 70%)' : 'radial-gradient(circle, rgba(153, 77, 0, 0.08) 0%, transparent 70%)',
-        filter: 'blur(60px)',
-        zIndex: 0,
-        animation: 'floatSlow 12s infinite ease-in-out',
-        pointerEvents: 'none'
-      }} />
-      <div style={{
-        position: 'absolute',
-        bottom: '10%',
-        left: '5%',
-        width: '500px',
-        height: '500px',
-        background: isDark ? 'radial-gradient(circle, rgba(184, 136, 176, 0.05) 0%, transparent 70%)' : 'radial-gradient(circle, rgba(59, 89, 152, 0.08) 0%, transparent 70%)',
-        filter: 'blur(60px)',
-        zIndex: 0,
-        animation: 'floatSlow 15s infinite ease-in-out reverse',
-        pointerEvents: 'none'
-      }} />
+      {/* AMBIENT BACKGROUND ORBS - Hidden on Mobile/iPad */}
+      {!isMobile && (
+        <>
+          <div style={{
+            position: 'absolute',
+            top: '15%',
+            right: '10%',
+            width: '400px',
+            height: '400px',
+            background: isDark ? 'radial-gradient(circle, rgba(218, 160, 48, 0.08) 0%, transparent 70%)' : 'radial-gradient(circle, rgba(153, 77, 0, 0.08) 0%, transparent 70%)',
+            filter: 'blur(60px)',
+            zIndex: 0,
+            animation: 'floatSlow 12s infinite ease-in-out',
+            pointerEvents: 'none'
+          }} />
+          <div style={{
+            position: 'absolute',
+            bottom: '10%',
+            left: '5%',
+            width: '500px',
+            height: '500px',
+            background: isDark ? 'radial-gradient(circle, rgba(184, 136, 176, 0.05) 0%, transparent 70%)' : 'radial-gradient(circle, rgba(59, 89, 152, 0.08) 0%, transparent 70%)',
+            filter: 'blur(60px)',
+            zIndex: 0,
+            animation: 'floatSlow 15s infinite ease-in-out reverse',
+            pointerEvents: 'none'
+          }} />
+        </>
+      )}
 
       {/* MAIN CONTENT */}
       <div style={{ flex: 1, zIndex: 1 }}>
@@ -1691,35 +1704,37 @@ function ProjectsSection({ projects, isMobile, themeStyles }) {
         `}
       </style>
 
-      {/* BACKGROUND ORBS */}
-      <div style={{
-        position: 'absolute',
-        top: 0, left: 0, right: 0, bottom: 0,
-        overflow: 'hidden',
-        pointerEvents: 'none',
-        zIndex: 0
-      }}>
+      {/* BACKGROUND ORBS - Hidden on Mobile/iPad */}
+      {!isMobile && (
         <div style={{
           position: 'absolute',
-          top: '10%',
-          left: '10%',
-          width: '480px',
-          height: '480px',
-          background: isDark ? 'radial-gradient(circle, rgba(218, 160, 48, 0.12) 0%, transparent 70%)' : 'radial-gradient(circle, rgba(230, 115, 0, 0.1) 0%, transparent 70%)',
-          filter: 'blur(80px)',
-          animation: 'floatOrb1 24s infinite ease-in-out',
-        }} />
-        <div style={{
-          position: 'absolute',
-          bottom: '10%',
-          right: '20%',
-          width: '400px',
-          height: '400px',
-          background: isDark ? 'radial-gradient(circle, rgba(184, 136, 176, 0.08) 0%, transparent 70%)' : 'radial-gradient(circle, rgba(59, 89, 152, 0.08) 0%, transparent 70%)',
-          filter: 'blur(80px)',
-          animation: 'floatOrb2 20s infinite ease-in-out reverse',
-        }} />
-      </div>
+          top: 0, left: 0, right: 0, bottom: 0,
+          overflow: 'hidden',
+          pointerEvents: 'none',
+          zIndex: 0
+        }}>
+          <div style={{
+            position: 'absolute',
+            top: '10%',
+            left: '10%',
+            width: '480px',
+            height: '480px',
+            background: isDark ? 'radial-gradient(circle, rgba(218, 160, 48, 0.12) 0%, transparent 70%)' : 'radial-gradient(circle, rgba(230, 115, 0, 0.1) 0%, transparent 70%)',
+            filter: 'blur(80px)',
+            animation: 'floatOrb1 24s infinite ease-in-out',
+          }} />
+          <div style={{
+            position: 'absolute',
+            bottom: '10%',
+            right: '20%',
+            width: '400px',
+            height: '400px',
+            background: isDark ? 'radial-gradient(circle, rgba(184, 136, 176, 0.08) 0%, transparent 70%)' : 'radial-gradient(circle, rgba(59, 89, 152, 0.08) 0%, transparent 70%)',
+            filter: 'blur(80px)',
+            animation: 'floatOrb2 20s infinite ease-in-out reverse',
+          }} />
+        </div>
+      )}
 
       {/* MAIN CONTENT */}
       <div style={{ flex: 1, zIndex: 1 }}>
@@ -1740,12 +1755,13 @@ function ProjectsSection({ projects, isMobile, themeStyles }) {
           PROJECTS
         </h2>
 
-        {/* 2-COLUMN GRID */}
+        {/* 2-COLUMN GRID - RESPONSIVE FOR iPad */}
         <div style={{ 
           display: 'grid', 
-          gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)', 
+          gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(380px, 1fr))', 
           gap: '40px', 
-          maxWidth: isMobile ? '100%' : '1100px' 
+          maxWidth: '100%',
+          width: '100%'
         }}>
           {projects.map((proj, i) => (
             <div key={i} className="project-card" style={{
@@ -2085,31 +2101,35 @@ function ExtrasSection({ skillData, hobbies, orgs, isMobile, themeStyles }) {
         `}
       </style>
 
-      {/* AMBIENT BACKGROUND ORBS */}
-      <div style={{
-        position: 'absolute',
-        top: '20%',
-        right: '5%',
-        width: '450px',
-        height: '450px',
-        background: isDark ? 'radial-gradient(circle, rgba(218, 160, 48, 0.1) 0%, transparent 70%)' : 'radial-gradient(circle, rgba(153, 77, 0, 0.08) 0%, transparent 70%)',
-        filter: 'blur(60px)',
-        zIndex: 0,
-        animation: 'floatOrb1 18s infinite ease-in-out',
-        pointerEvents: 'none'
-      }} />
-      <div style={{
-        position: 'absolute',
-        bottom: '10%',
-        left: '10%',
-        width: '400px',
-        height: '400px',
-        background: isDark ? 'radial-gradient(circle, rgba(184, 136, 176, 0.08) 0%, transparent 70%)' : 'radial-gradient(circle, rgba(59, 89, 152, 0.08) 0%, transparent 70%)',
-        filter: 'blur(60px)',
-        zIndex: 0,
-        animation: 'floatOrb2 22s infinite ease-in-out reverse',
-        pointerEvents: 'none'
-      }} />
+      {/* AMBIENT BACKGROUND ORBS - Hidden on Mobile/iPad */}
+      {!isMobile && (
+        <>
+          <div style={{
+            position: 'absolute',
+            top: '20%',
+            right: '5%',
+            width: '450px',
+            height: '450px',
+            background: isDark ? 'radial-gradient(circle, rgba(218, 160, 48, 0.1) 0%, transparent 70%)' : 'radial-gradient(circle, rgba(153, 77, 0, 0.08) 0%, transparent 70%)',
+            filter: 'blur(60px)',
+            zIndex: 0,
+            animation: 'floatOrb1 18s infinite ease-in-out',
+            pointerEvents: 'none'
+          }} />
+          <div style={{
+            position: 'absolute',
+            bottom: '10%',
+            left: '10%',
+            width: '400px',
+            height: '400px',
+            background: isDark ? 'radial-gradient(circle, rgba(184, 136, 176, 0.08) 0%, transparent 70%)' : 'radial-gradient(circle, rgba(59, 89, 152, 0.08) 0%, transparent 70%)',
+            filter: 'blur(60px)',
+            zIndex: 0,
+            animation: 'floatOrb2 22s infinite ease-in-out reverse',
+            pointerEvents: 'none'
+          }} />
+        </>
+      )}
 
       {/* MAIN CONTENT */}
       <div style={{ flex: 1, zIndex: 1 }}>
@@ -2132,7 +2152,7 @@ function ExtrasSection({ skillData, hobbies, orgs, isMobile, themeStyles }) {
 
         {/* SKILLS */}
         <div style={{ marginBottom: '80px' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)', gap: isMobile ? '20px' : '40px', maxWidth: isMobile ? '100%' : '1000px', marginBottom: '40px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(300px, 1fr))', gap: isMobile ? '20px' : '40px', maxWidth: '100%', marginBottom: '40px' }}>
             {skillData.map((group, i) => (
               <div key={i} style={{
                 background: isDark ? 'rgba(34, 24, 40, 0.6)' : 'rgba(255, 255, 255, 0.7)',
@@ -2396,7 +2416,7 @@ function ContactAndReferencesSection({ isMobile, themeStyles }) {
           </div>
 
           {/* CONTACT INFO GRID (Staggered load-in) */}
-          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: isMobile ? '16px' : '24px', marginBottom: '32px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(200px, 1fr))', gap: isMobile ? '16px' : '24px', marginBottom: '32px' }}>
             {contacts.map((contact, i) => (
               <div key={i} style={{
                 background: 'linear-gradient(135deg, rgba(218, 160, 48, 0.12), rgba(218, 160, 48, 0.05))',

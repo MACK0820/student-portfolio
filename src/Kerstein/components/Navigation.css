@@ -497,7 +497,6 @@
 }
 
 html {
-  /* This should match or be slightly larger than your navbar height (110px) */
-  scroll-padding-top: 120px; 
+  scroll-padding-top: 110px; 
   scroll-behavior: smooth;
 }
