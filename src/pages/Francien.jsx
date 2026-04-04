@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 
-export default function WildPortfolio() {
+export default function Francien() {
   const [activeSection, setActiveSection] = useState('hero')
   const [theme, setTheme] = useState('dark')
   const isDark = theme === 'dark'
   const [profilePic] = useState('/hkfrancien.jpeg')
   const [isMobile, setIsMobile] = useState(window.innerWidth < 900)
   const [selectedImage, setSelectedImage] = useState(null);
+  const contentRef = useRef(null);
 
   const themeStyles = {
     bodyBackground: isDark
@@ -21,12 +22,19 @@ export default function WildPortfolio() {
   }
 
   useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 900)
-    }
+    const handleResize = () => setIsMobile(window.innerWidth < 900)
     window.addEventListener('resize', handleResize)
     return () => window.removeEventListener('resize', handleResize)
   }, [])
+
+  useEffect(() => {
+    // desktop: scroll the content panel div
+    if (contentRef.current) {
+      contentRef.current.scrollTop = 0
+    }
+    // mobile: the window itself scrolls
+    window.scrollTo(0, 0)
+  }, [activeSection])
 
   const achievements = [
     // ELEMENTARY
@@ -196,7 +204,7 @@ export default function WildPortfolio() {
   ]
 
   const navigation = [
-    { id: 'hero', label: 'START'},
+    { id: 'hero', label: 'HOME'},
     { id: 'about', label: 'ABOUT'},
     { id: 'journey', label: 'JOURNEY'},
     { id: 'achievements', label: 'ACHIEVEMENTS'},
@@ -276,7 +284,6 @@ export default function WildPortfolio() {
           </div>
         )}
 
-        {/* NAV BUTTONS + TOGGLE WRAPPER */}
         <div style={{
           display: 'flex',
           flexDirection: isMobile ? 'row' : 'column',
@@ -361,21 +368,23 @@ export default function WildPortfolio() {
             </div>
           </div>
         )}
-      </div> {/* This closes LEFT SIDE NAVIGATION PANEL */}
+      </div> 
 
       {/* MAIN CONTENT AREA */}
-      <div style={{ 
-        flex: 1, 
-        height: isMobile ? 'auto' : '100vh', 
-        overflowY: 'auto', 
-        position: 'relative',
-        width: isMobile ? '100%' : 'auto',
-        paddingTop: isMobile ? '120px' : '0',
-      }}>
+      <div 
+        ref={contentRef}
+        style={{ 
+          flex: 1, 
+          height: isMobile ? 'auto' : '100vh', 
+          overflowY: 'auto', 
+          position: 'relative',
+          width: isMobile ? '100%' : 'auto',
+          paddingTop: isMobile ? '120px' : 0,
+        }}>
         {renderSection()}
       </div>
 
-    </div> // This closes the main flex container from the top of return()
+    </div>
   );
 }
 
