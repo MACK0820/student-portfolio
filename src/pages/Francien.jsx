@@ -8,6 +8,19 @@ export default function Francien() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 900)
   const [selectedImage, setSelectedImage] = useState(null);
   const contentRef = useRef(null);
+  const topAnchorRef = useRef(null);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 900)
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
+  useEffect(() => {
+    if (topAnchorRef.current) {
+      topAnchorRef.current.scrollIntoView()
+    }
+  }, [activeSection])
 
   const themeStyles = {
     bodyBackground: isDark
@@ -20,21 +33,6 @@ export default function Francien() {
     accent: isDark ? '#daa030' : '#994d00',
     muted: isDark ? '#b888b0' : '#4a4a4a',
   }
-
-  useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 900)
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
-  }, [])
-
-  useEffect(() => {
-    // desktop: scroll the content panel div
-    if (contentRef.current) {
-      contentRef.current.scrollTop = 0
-    }
-    // mobile: the window itself scrolls
-    window.scrollTo(0, 0)
-  }, [activeSection])
 
   const achievements = [
     // ELEMENTARY
@@ -381,6 +379,7 @@ export default function Francien() {
           width: isMobile ? '100%' : 'auto',
           paddingTop: isMobile ? '120px' : 0,
         }}>
+        <div ref={topAnchorRef} style={{ height: 0, overflow: 'hidden' }} />
         {renderSection()}
       </div>
 
@@ -1281,9 +1280,9 @@ function AchievementsSection({ achievements, seminars, certificates, isMobile, t
     'College': achievements.filter(a => a.level === 'College'),
     'Personal': achievements.filter(a => a.level === 'Personal'),
   }
-
+ 
   const orderedSeminars = [...seminars].sort((a, b) => new Date(a.date) - new Date(b.date))
-
+ 
   const levels = ['Elementary', 'Junior High', 'Senior High', 'College', 'Personal']
   const colors = {
     'Elementary': '#6b4a12',
@@ -1292,13 +1291,19 @@ function AchievementsSection({ achievements, seminars, certificates, isMobile, t
     'College': '#f0c050',
     'Personal': '#f0e8f0'
   }
-
+ 
   return (
     <div style={{
       minHeight: '100vh',
       padding: isMobile ? '40px 20px' : '80px',
       animation: 'slide-in-right 0.6s ease-out'
     }}>
+      <style>{`
+        @keyframes fade-up {
+          from { opacity: 0; transform: translateY(16px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
       <h2 style={{
         fontSize: isMobile ? '42px' : '64px',
         fontWeight: 800,
@@ -1309,7 +1314,7 @@ function AchievementsSection({ achievements, seminars, certificates, isMobile, t
       }}>
         AWARDS & RECOGNITION
       </h2>
-
+ 
       {levels.map((level) => (
         groupedAchievements[level].length > 0 && (
           <div key={level} style={{ marginBottom: '60px' }}>
@@ -1347,7 +1352,7 @@ function AchievementsSection({ achievements, seminars, certificates, isMobile, t
                 {groupedAchievements[level].length} {groupedAchievements[level].length === 1 ? 'achievement' : 'achievements'}
               </span>
             </div>
-
+ 
             {/* ACHIEVEMENTS GRID */}
             <div style={{
               display: 'grid',
@@ -1381,7 +1386,7 @@ function AchievementsSection({ achievements, seminars, certificates, isMobile, t
                     e.currentTarget.style.boxShadow = 'none'
                   }}
                 >
-
+ 
                   <div style={{ 
                     display: 'flex', 
                     justifyContent: 'center', 
@@ -1408,14 +1413,14 @@ function AchievementsSection({ achievements, seminars, certificates, isMobile, t
                     <div style={{ fontWeight: 700, fontSize: '18px', color: themeStyles.bodyColor }}>
                       {ach.title}
                     </div>
-
+ 
                     {/* 2. ORGANIZATION (Clearly visible right under the title!) */}
                     {ach.org && (
                       <div style={{ fontSize: '15px', color: themeStyles.accent, marginTop: '6px', fontWeight: 600 }}>
                         {ach.org}
                       </div>
                     )}
-
+ 
                     {/* 3. DESCRIPTION (Below the org, before the date!) */}
                     {ach.description && (
                       <div style={{ 
@@ -1429,12 +1434,12 @@ function AchievementsSection({ achievements, seminars, certificates, isMobile, t
                         {ach.description}
                       </div>
                     )}
-
+ 
                     {/* 4. YEAR (Safely at the bottom) */}
                     <div style={{ fontSize: '15px', color: themeStyles.muted, marginTop: '4px', opacity: 0.8 }}>
                       {ach.year}
                     </div>
-
+ 
                   </div>
                 </div>
               ))}
@@ -1442,7 +1447,7 @@ function AchievementsSection({ achievements, seminars, certificates, isMobile, t
           </div>
         )
       ))}
-
+ 
       {/* ── SEMINARS ATTENDED ── */}
       <div style={{ marginBottom: '60px' }}>
         <div style={{
@@ -1485,8 +1490,8 @@ function AchievementsSection({ achievements, seminars, certificates, isMobile, t
               borderRadius: '10px',
               transition: 'all 0.3s ease',
               cursor: 'default',
-              opacity: 0,
-              animation: 'fade-up 0.7s ease-out forwards',
+              opacity: 1,
+              animation: 'fade-up 0.5s ease-out both',
               animationDelay: `${i * 0.08}s`,
               willChange: 'transform, opacity'
             }}
@@ -1525,7 +1530,7 @@ function AchievementsSection({ achievements, seminars, certificates, isMobile, t
           ))}
         </div>
       </div>
-
+ 
       {/* ── CERTIFICATES ACQUIRED ── */}
       <div style={{ marginBottom: '60px' }}>
         <div style={{
@@ -1625,439 +1630,7 @@ function AchievementsSection({ achievements, seminars, certificates, isMobile, t
           ))}
         </div>
       </div>
-
-    </div>
-  )
-}
-
-function ProjectsSection({ projects, isMobile, themeStyles }) {
-  const isDark = themeStyles.accent === '#daa030';
-  const accentRgb = isDark ? '218, 160, 48' : '153, 77, 0'; 
-  
-  const uiFont = "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
-
-  return (
-    <div style={{
-      minHeight: '100vh',
-      padding: isMobile ? '40px 20px' : '80px',
-      display: 'flex',
-      gap: '64px', 
-      position: 'relative'
-    }}>
-      
-      <style>
-        {`
-          @keyframes slideUpFade {
-            from { opacity: 0; transform: translateY(40px); }
-            to { opacity: 1; transform: translateY(0); }
-          }
-          
-          @keyframes slideInRight {
-            from { opacity: 0; transform: translateX(40px); }
-            to { opacity: 1; transform: translateX(0); }
-          }
-          
-          @keyframes scaleFadeIn {
-            from { opacity: 0; transform: scale(0.96) translateY(24px); }
-            to { opacity: 1; transform: scale(1) translateY(0); }
-          }
-
-          @keyframes floatOrb1 {
-            0% { transform: translate(0px, 0px) scale(1); }
-            33% { transform: translate(40px, -80px) scale(1.1); }
-            66% { transform: translate(-40px, 40px) scale(0.9); }
-            100% { transform: translate(0px, 0px) scale(1); }
-          }
-          
-          @keyframes floatOrb2 {
-            0% { transform: translate(0px, 0px) scale(1); }
-            33% { transform: translate(-60px, 60px) scale(1.1); }
-            66% { transform: translate(30px, -30px) scale(0.9); }
-            100% { transform: translate(0px, 0px) scale(1); }
-          }
-
-          @keyframes titleShimmer {
-            0% { background-position: -200% center; }
-            100% { background-position: 200% center; }
-          }
-
-          @keyframes glowPulse {
-            0% { opacity: 0.6; box-shadow: 0 0 10px rgba(${accentRgb}, 0.2); }
-            50% { opacity: 1; box-shadow: 0 0 20px rgba(${accentRgb}, 0.6); }
-            100% { opacity: 0.6; box-shadow: 0 0 10px rgba(${accentRgb}, 0.2); }
-          }
-
-          @keyframes lineFlow {
-            0% { background-position: 0% -100%; }
-            100% { background-position: 0% 200%; }
-          }
-
-          .project-card:hover .project-img {
-            transform: scale(1.04);
-          }
-          
-          .project-card::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0));
-            opacity: 0;
-            transition: opacity 0.4s ease;
-            pointer-events: none;
-            z-index: 1;
-          }
-          
-          .project-card:hover::after {
-            opacity: 1;
-          }
-        `}
-      </style>
-
-      {/* BACKGROUND ORBS - Hidden on Mobile/iPad */}
-      {!isMobile && (
-        <div style={{
-          position: 'absolute',
-          top: 0, left: 0, right: 0, bottom: 0,
-          overflow: 'hidden',
-          pointerEvents: 'none',
-          zIndex: 0
-        }}>
-          <div style={{
-            position: 'absolute',
-            top: '10%',
-            left: '10%',
-            width: '480px',
-            height: '480px',
-            background: isDark ? 'radial-gradient(circle, rgba(218, 160, 48, 0.12) 0%, transparent 70%)' : 'radial-gradient(circle, rgba(230, 115, 0, 0.1) 0%, transparent 70%)',
-            filter: 'blur(80px)',
-            animation: 'floatOrb1 24s infinite ease-in-out',
-          }} />
-          <div style={{
-            position: 'absolute',
-            bottom: '10%',
-            right: '20%',
-            width: '400px',
-            height: '400px',
-            background: isDark ? 'radial-gradient(circle, rgba(184, 136, 176, 0.08) 0%, transparent 70%)' : 'radial-gradient(circle, rgba(59, 89, 152, 0.08) 0%, transparent 70%)',
-            filter: 'blur(80px)',
-            animation: 'floatOrb2 20s infinite ease-in-out reverse',
-          }} />
-        </div>
-      )}
-
-      {/* MAIN CONTENT */}
-      <div style={{ flex: 1, zIndex: 1 }}>
-        <h2 style={{
-          fontSize: isMobile ? '40px' : '64px',
-          fontWeight: 800,
-          marginBottom: '64px', 
-          fontFamily: "'Space Grotesk', sans-serif",
-          letterSpacing: '-1px',
-          backgroundImage: `linear-gradient(90deg, ${themeStyles.bodyColor} 0%, ${themeStyles.accent} 50%, ${themeStyles.bodyColor} 100%)`,
-          backgroundSize: '200% auto',
-          WebkitBackgroundClip: 'text',
-          backgroundClip: 'text',
-          WebkitTextFillColor: 'transparent',
-          color: 'transparent',
-          animation: 'slideUpFade 0.6s ease-out forwards, titleShimmer 6s linear infinite'
-        }}>
-          PROJECTS
-        </h2>
-
-        {/* 2-COLUMN GRID - RESPONSIVE FOR iPad */}
-        <div style={{ 
-          display: 'grid', 
-          gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(380px, 1fr))', 
-          gap: '40px', 
-          maxWidth: '100%',
-          width: '100%'
-        }}>
-          {projects.map((proj, i) => (
-            <div key={i} className="project-card" style={{
-              background: isDark ? 'linear-gradient(135deg, rgba(34, 24, 40, 0.6), rgba(20, 15, 25, 0.8))' : 'rgba(255, 255, 255, 0.6)',
-              backdropFilter: 'blur(20px)',
-              WebkitBackdropFilter: 'blur(20px)',
-              border: `1px solid rgba(${accentRgb}, 0.24)`,
-              borderTop: `1px solid ${isDark ? 'rgba(255,255,255,0.08)' : 'rgba(255,255,255,0.4)'}`,
-              borderLeft: `1px solid ${isDark ? 'rgba(255,255,255,0.08)' : 'rgba(255,255,255,0.4)'}`,
-              borderRadius: '20px',
-              padding: isMobile ? '24px' : '32px',
-              transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
-              cursor: 'pointer',
-              position: 'relative',
-              overflow: 'hidden',
-              opacity: 0,
-              animation: 'scaleFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
-              animationDelay: `${0.2 + (i * 0.1)}s`,
-              boxShadow: isDark ? '0 16px 32px rgba(0,0,0,0.4)' : '0 12px 24px rgba(0,0,0,0.06)',
-              display: 'flex',
-              flexDirection: 'column',
-              height: '100%', 
-              boxSizing: 'border-box'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = `rgba(${accentRgb}, 0.8)`;
-              e.currentTarget.style.transform = 'translateY(-8px)';
-              e.currentTarget.style.boxShadow = isDark 
-                ? `0 24px 48px rgba(0,0,0,0.6), 0 0 24px rgba(${accentRgb}, 0.24)` 
-                : `0 20px 40px rgba(0,0,0,0.12), 0 0 16px rgba(${accentRgb}, 0.16)`;
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = `rgba(${accentRgb}, 0.24)`;
-              e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.boxShadow = isDark ? '0 16px 32px rgba(0,0,0,0.4)' : '0 12px 24px rgba(0,0,0,0.06)';
-            }}>
-              
-              {/* STATUS BADGE */}
-              <div style={{
-                position: 'absolute',
-                top: '24px',
-                right: '24px',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '8px',
-                padding: '6px 14px',
-                borderRadius: '999px',
-                background: isDark ? `rgba(0,0,0,0.4)` : '#ffffff',
-                border: `1px solid rgba(${accentRgb}, ${isDark ? 0.3 : 0.6})`,
-                color: themeStyles.bodyColor,
-                fontFamily: uiFont,
-                fontSize: '12px', 
-                fontWeight: 700,
-                textTransform: 'uppercase',
-                letterSpacing: '1px',
-                zIndex: 10,
-                boxShadow: isDark ? '0 4px 12px rgba(0,0,0,0.2)' : '0 4px 12px rgba(0,0,0,0.06)',
-                backdropFilter: 'blur(4px)'
-              }}>
-                <span style={{ 
-                  width: '8px', 
-                  height: '8px', 
-                  borderRadius: '50%', 
-                  background: proj.status.toLowerCase() === 'ongoing' ? '#4cc76b' : themeStyles.accent,
-                  boxShadow: `0 0 8px ${proj.status.toLowerCase() === 'ongoing' ? '#4cc76b' : themeStyles.accent}`,
-                  animation: proj.status.toLowerCase() === 'ongoing' ? 'glowPulse 2s infinite' : 'none'
-                }} />
-                {proj.status}
-              </div>
-
-              {/* CARD HEADER */}
-              <div style={{ marginBottom: '24px', paddingRight: '120px', position: 'relative', zIndex: 2 }}>
-                <div style={{ 
-                  fontFamily: uiFont,
-                  fontSize: '12px', 
-                  color: themeStyles.accent, 
-                  fontWeight: 800, 
-                  letterSpacing: '2px', 
-                  textTransform: 'uppercase', 
-                  marginBottom: '8px' 
-                }}>
-                  &lt; {proj.type} · {proj.year} /&gt;
-                </div>
-                <h3 style={{ 
-                  fontSize: isMobile ? '24px' : '28px', 
-                  fontWeight: 800, 
-                  margin: 0, 
-                  fontFamily: "'Space Grotesk', sans-serif", 
-                  color: themeStyles.bodyColor, 
-                  lineHeight: 1.3 
-                }}>
-                  {proj.title}
-                </h3>
-              </div>
-
-              {/* IMAGE CONTAINER */}
-              <div style={{ 
-                width: '100%', 
-                height: isMobile ? '200px' : '240px', 
-                borderRadius: '16px', 
-                overflow: 'hidden', 
-                marginBottom: '24px', 
-                border: `1px solid rgba(${accentRgb}, 0.2)`,
-                boxShadow: 'inset 0 0 16px rgba(0,0,0,0.2)',
-                background: isDark ? 'rgba(0,0,0,0.4)' : 'rgba(0,0,0,0.04)',
-                position: 'relative',
-                zIndex: 2,
-              }}>
-                <img 
-                  className="project-img" 
-                  src={proj.image} 
-                  alt={proj.title} 
-                  style={{ 
-                    width: '100%', 
-                    height: '100%', 
-                    objectFit: 'contain',
-                    objectPosition: 'center',
-                    transition: 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
-                    position: 'relative',
-                    zIndex: 1,
-                  }} 
-                />
-              </div>
-
-              {/* TEXT AND TECH STACK */}
-              <div style={{ position: 'relative', zIndex: 2, display: 'flex', flexDirection: 'column', flex: 1 }}>
-                <p style={{ 
-                  fontFamily: uiFont,
-                  fontSize: isMobile ? '14px' : '16px', 
-                  color: themeStyles.muted, 
-                  lineHeight: 1.6, 
-                  marginBottom: '24px' 
-                }}>
-                  {proj.desc}
-                </p>
-
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '32px' }}>
-                  {proj.tools.map((tool, j) => (
-                    <span key={j} style={{
-                      padding: '6px 12px', 
-                      background: isDark ? `rgba(${accentRgb}, 0.12)` : `rgba(${accentRgb}, 0.08)`,
-                      border: `1px solid rgba(${accentRgb}, ${isDark ? 0.24 : 0.2})`,
-                      borderRadius: '8px',
-                      fontFamily: uiFont,
-                      fontSize: '12px', 
-                      color: isDark ? '#ffffff' : themeStyles.accent,
-                      fontWeight: 600,
-                      letterSpacing: '0.5px'
-                    }}>
-                      {tool}
-                    </span>
-                  ))}
-                </div>
-
-                {/* ACTION BUTTONS - Perfectly anchored to bottom */}
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', marginTop: 'auto' }}>
-                  {proj.repoLink && (
-                    <a href={proj.repoLink} target="_blank" rel="noopener noreferrer" style={{ 
-                      padding: '12px 24px', 
-                      borderRadius: '10px', 
-                      background: themeStyles.accent, 
-                      color: '#ffffff', 
-                      textDecoration: 'none', 
-                      fontFamily: uiFont,
-                      fontWeight: 700, 
-                      fontSize: '14px', 
-                      transition: 'all 0.3s ease',
-                      display: 'flex', alignItems: 'center', gap: '8px',
-                      boxShadow: `0 8px 16px rgba(${accentRgb}, ${isDark ? 0.24 : 0.16})`
-                    }}
-                    onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-2px)'}
-                    onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}>
-                      &lt;/&gt; Code
-                    </a>
-                  )}
-                  {proj.demoLink && (
-                    <a href={proj.demoLink} target="_blank" rel="noopener noreferrer" style={{ 
-                      padding: '12px 24px', 
-                      borderRadius: '10px', 
-                      border: `2px solid ${themeStyles.accent}`, 
-                      background: isDark ? 'rgba(0,0,0,0.2)' : 'rgba(255,255,255,0.8)',
-                      color: themeStyles.bodyColor, 
-                      textDecoration: 'none', 
-                      fontFamily: uiFont,
-                      fontWeight: 700, 
-                      fontSize: '14px',
-                      transition: 'all 0.3s ease',
-                      display: 'flex', alignItems: 'center', gap: '8px'
-                    }}
-                    onMouseEnter={e => {
-                      e.currentTarget.style.background = isDark ? `rgba(${accentRgb}, 0.1)` : '#ffffff';
-                      e.currentTarget.style.transform = 'translateY(-2px)';
-                      e.currentTarget.style.boxShadow = `0 8px 16px rgba(0,0,0,0.08)`;
-                    }}
-                    onMouseLeave={e => {
-                      e.currentTarget.style.background = isDark ? 'rgba(0,0,0,0.2)' : 'rgba(255,255,255,0.8)';
-                      e.currentTarget.style.transform = 'translateY(0)';
-                      e.currentTarget.style.boxShadow = `none`;
-                    }}>
-                      👁️ Site
-                    </a>
-                  )}
-                </div>
-              </div>
-
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* RIGHT DECORATION PANEL */}
-      {!isMobile && (
-        <div style={{ width: '320px', flexShrink: 0, display: 'flex', flexDirection: 'column', gap: '16px', paddingTop: '128px', borderLeft: `1px solid rgba(${accentRgb}, 0.16)`, paddingLeft: '40px', zIndex: 1 }}>
-          <div style={{ fontSize: '28px', fontWeight: 800, letterSpacing: '4px', color: `rgba(${accentRgb}, 0.6)`, textTransform: 'uppercase', marginBottom: '8px', fontFamily: "'Space Grotesk', sans-serif" }}>Stack</div>
-          
-          {['C++', 'Python', 'Logic', 'Systems', 'Networks', 'Security'].map((tech, i) => (
-            <div key={tech} style={{ 
-              padding: '14px 24px', 
-              border: `1px solid rgba(${accentRgb}, 0.24)`, 
-              borderRadius: '12px', 
-              background: `rgba(${accentRgb}, ${isDark ? 0.04 : 0.02})`, 
-              fontFamily: uiFont,
-              fontSize: '16px', 
-              color: themeStyles.bodyColor, 
-              fontWeight: 600,
-              letterSpacing: '1px', 
-              transition: 'all 0.3s ease',
-              opacity: 0,
-              animation: 'slideInRight 0.6s ease-out forwards',
-              animationDelay: `${0.8 + (i * 0.08)}s`,
-            }}
-              onMouseEnter={e => { 
-                e.currentTarget.style.borderColor = themeStyles.accent; 
-                e.currentTarget.style.background = `rgba(${accentRgb}, ${isDark ? 0.12 : 0.08})`;
-                e.currentTarget.style.transform = 'translateX(8px)';
-              }}
-              onMouseLeave={e => { 
-                e.currentTarget.style.borderColor = `rgba(${accentRgb}, 0.24)`; 
-                e.currentTarget.style.background = `rgba(${accentRgb}, ${isDark ? 0.04 : 0.02})`;
-                e.currentTarget.style.transform = 'translateX(0)';
-              }}>
-                <span style={{color: themeStyles.accent, marginRight: '8px'}}>#</span> {tech}
-            </div>
-          ))}
-          
-          <div style={{ 
-            width: '2px', 
-            height: '96px', 
-            borderRadius: '2px',
-            background: `linear-gradient(to bottom, transparent, rgba(${accentRgb}, 0.6), rgba(${accentRgb}, 0.6), transparent)`,
-            backgroundSize: '100% 200%',
-            marginLeft: '8px', 
-            opacity: 0.6,
-            animation: 'lineFlow 4s linear infinite',
-            marginTop: '8px'
-          }} />
-          
-          <div style={{ padding: '24px', border: `1px solid rgba(${accentRgb}, 0.24)`, borderRadius: '16px', background: `rgba(${accentRgb}, 0.06)`, opacity: 0, animation: 'slideUpFade 0.6s ease-out forwards', animationDelay: '1.4s', position: 'relative' }}>
-            <span style={{position: 'absolute', top: '12px', left: '12px', color: themeStyles.accent, fontSize: '32px', opacity: 0.2, fontFamily: 'serif'}}>“</span>
-            <div style={{ fontFamily: uiFont, fontSize: '16px', color: themeStyles.muted, lineHeight: 1.6, fontStyle: 'italic', paddingLeft: '16px' }}>Code is where ideas become real.</div>
-          </div>
-          
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '12px', marginTop: '16px' }}>
-            {Array(16).fill(0).map((_, i) => (
-              <div key={i} style={{ 
-                width: '8px', 
-                height: '8px', 
-                borderRadius: '50%', 
-                background: `rgba(${accentRgb}, ${isDark ? 0.16 + (i % 4) * 0.1 : 0.08 + (i % 4) * 0.06})`, 
-                margin: '0 auto',
-                transition: 'all 0.2s ease',
-                cursor: 'none'
-              }}
-              onMouseEnter={e => {
-                e.currentTarget.style.background = themeStyles.accent;
-                e.currentTarget.style.transform = 'scale(2)';
-                e.currentTarget.style.boxShadow = `0 0 12px ${themeStyles.accent}`;
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.style.background = `rgba(${accentRgb}, ${isDark ? 0.16 + (i % 4) * 0.1 : 0.08 + (i % 4) * 0.06})`;
-                e.currentTarget.style.transform = 'scale(1)';
-                e.currentTarget.style.boxShadow = 'none';
-              }} />
-            ))}
-          </div>
-        </div>
-      )}
+ 
     </div>
   )
 }
