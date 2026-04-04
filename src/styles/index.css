@@ -1359,3 +1359,20 @@ body, .dashboard, .student-card, .dash-header, .port-band, .proj, .contact-row, 
     margin-top: 20px;      /* Pushes the actual visual lower */
   }
 }
+
+/* Prevent horizontal scroll globally */
+html, body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}

@@ -4,6 +4,7 @@ import './Navigation.css'
 
 function Navigation() {
   const [activeSection, setActiveSection] = useState('home')
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   const scrollToSection = (e, id) => {
     e.preventDefault();
@@ -11,6 +12,7 @@ function Navigation() {
     if (element) {
       element.scrollIntoView({ behavior: 'smooth', block: 'start' });
       setActiveSection(id);
+      setMobileMenuOpen(false);
     }
   };
 
@@ -42,7 +44,7 @@ function Navigation() {
           </a>
         </div>
 
-        <ul className="nav-menu">
+        <ul className={`nav-menu ${mobileMenuOpen ? 'active' : ''}`}>
           <li className="nav-item">
             <a
               href="#home"
@@ -108,6 +110,16 @@ function Navigation() {
             in
           </a>
         </div>
+
+        <button 
+          className={`menu-toggle ${mobileMenuOpen ? 'open' : ''}`}
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          aria-label="Toggle mobile menu"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
       </div>
     </nav>
   )

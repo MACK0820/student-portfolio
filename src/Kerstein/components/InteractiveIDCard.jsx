@@ -64,11 +64,6 @@ function InteractiveIDCard() {
             <div className="card-shine"></div>
 
             <div className="id-card-content">
-              <div className="id-header">
-                <div className="id-title">KERSTEIN ASHBY C. SAN PEDRO</div>
-                <div className="id-subtitle">Computer Engineering Student</div>
-              </div>
-
               <div className="id-photo-container">
                 <img 
                   src={profilePic}
@@ -78,6 +73,11 @@ function InteractiveIDCard() {
                     e.target.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="150" height="150"%3E%3Crect fill="%23333" width="150" height="150"/%3E%3Ctext x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="%23999" font-size="14"%3EProfile Photo%3C/text%3E%3C/svg%3E';
                   }}
                 />
+              </div>
+
+              <div className="id-header">
+                <div className="id-title">KERSTEIN ASHBY C. SAN PEDRO</div>
+                <div className="id-subtitle">Computer Engineering Student</div>
               </div>
 
               <div className="id-info">

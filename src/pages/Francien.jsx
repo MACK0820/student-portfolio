@@ -143,7 +143,7 @@ export default function WildPortfolio() {
       title: 'Skyline Analytics Login Interface',
       type: 'UI Design',
       year: '2026',
-      status: 'Ongoing',
+      status: 'Completed',
       desc: 'A modern login interface for the Skyline Analytics platform. Features a login form with input fields.',
       tools: ['HTML', 'CSS', 'JavaScript'],
       image: 'proj.jpeg',
@@ -282,21 +282,25 @@ export default function WildPortfolio() {
           </div>
         )}
 
-        {/* NAV BUTTONS */}
+        {/* NAV BUTTONS + TOGGLE WRAPPER */}
         <div style={{ 
           display: 'flex', 
           flexDirection: isMobile ? 'row' : 'column', 
-          gap: isMobile ? '8px' : '12px', 
-          paddingRight: isMobile ? '16px' : '24px',
-          overflowX: isMobile ? 'auto' : 'visible', 
-          paddingBottom: isMobile ? '10px' : '0'
+          alignItems: 'center', // Aligns toggle and buttons vertically center
+          gap: isMobile ? '12px' : '16px', 
+          padding: isMobile ? '10px 20px' : '0 24px',
+          overflowX: isMobile ? 'auto' : 'visible',
+          width: '100%',
+          scrollbarWidth: 'none'
         }}>
+          
+          {/* The Navigation Buttons */}
           {navigation.map((nav) => (
             <button
               key={nav.id}
               onClick={() => setActiveSection(nav.id)}
               style={{
-                padding: isMobile ? '10px 16px' : '16px 20px', 
+                padding: isMobile ? '10px 16px' : '16px 20px',
                 background: activeSection === nav.id 
                   ? 'linear-gradient(135deg, rgba(218, 160, 48, 0.3), rgba(218, 160, 48, 0.1))'
                   : 'transparent',
@@ -305,56 +309,40 @@ export default function WildPortfolio() {
                   : '2px solid rgba(218, 160, 48, 0.2)',
                 borderRadius: '8px',
                 color: activeSection === nav.id ? themeStyles.accent : themeStyles.muted,
-                fontFamily: "'Syne', sans-serif",
-                fontWeight: 600,
-                fontSize: isMobile ? '10px' : '13px', 
-                letterSpacing: '1px',
+                fontSize: isMobile ? '11px' : '13px',
                 textTransform: 'uppercase',
-                cursor: 'pointer',
-                transition: 'all 0.3s ease',
-                textAlign: 'left',
+                whiteSpace: 'nowrap',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '8px', 
-                marginLeft: isMobile ? '0' : '24px',
-                animation: activeSection === nav.id ? 'pulse-big 2s ease-in-out infinite' : 'none',
-                whiteSpace: 'nowrap', 
-                flexShrink: 0
+                gap: '8px',
+                flexShrink: 0 // Stops the button from squishing
               }}
             >
-              <span style={{ fontSize: isMobile ? '14px' : '18px' }}>{nav.symbol}</span>
-              
-              {/* REMOVED !isMobile so label always shows */}
-              <span>{nav.label}</span> 
-              
+              <span style={{ fontSize: isMobile ? '16px' : '18px' }}>{nav.symbol}</span>
+              <span>{nav.label}</span>
             </button>
           ))}
-        </div>
 
-        {/* THEME TOGGLE */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: isMobile ? 'flex-end' : 'center', gap: '10px', marginTop: isMobile ? '14px' : '28px', padding: isMobile ? '0 16px' : '0 24px' }}>
-          <span style={{ fontSize: '12px', color: themeStyles.muted, letterSpacing: '1px' }}>
-            {isDark ? 'Dark Mode' : 'Light Mode'}
-          </span>
-          <button
+          {/* THE THEME TOGGLE (Now lined up at the end of the row) */}
+          <button 
             onClick={() => setTheme(isDark ? 'light' : 'dark')}
             style={{
-              width: '46px',
-              height: '24px',
-              borderRadius: '999px',
-              border: '1px solid rgba(218, 160, 48, 0.35)',
-              background: isDark ? 'rgba(255,255,255,0.08)' : 'rgba(34,24,40,0.08)',
-              color: themeStyles.bodyColor,
-              cursor: 'pointer',
-              position: 'relative',
-              padding: '2px',
+              background: 'rgba(218, 160, 48, 0.1)',
+              border: '1px solid rgba(218, 160, 48, 0.4)',
+              borderRadius: '50%',
+              width: isMobile ? '40px' : '45px',
+              height: isMobile ? '40px' : '45px',
               display: 'flex',
               alignItems: 'center',
-              justifyContent: isDark ? 'flex-start' : 'flex-end',
-              transition: 'all 0.25s ease'
+              justifyContent: 'center',
+              cursor: 'pointer',
+              fontSize: '18px',
+              flexShrink: 0, // Prevents it from hiding
+              marginLeft: isMobile ? '8px' : '0',
+              marginTop: isMobile ? '0' : '20px' // Space it out on PC
             }}
           >
-            <span style={{ width: '20px', height: '20px', borderRadius: '50%', background: themeStyles.accent, display: 'block' }} />
+            {isDark ? '☀️' : '🌙'}
           </button>
         </div>
 
@@ -496,7 +484,7 @@ function HeroSection({ setActiveSection, profilePic, isMobile, themeStyles, isDa
         </div>
 
         {/* QUICK STATS */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '26px', marginTop: '100px', maxWidth: '640px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: isMobile ? '16px' : '26px', marginTop: isMobile ? '40px' : '100px', maxWidth: '640px' }}>
           <div style={{
             padding: isMobile ? '32px 22px' : '34px 24px',
             background: 'linear-gradient(135deg, rgba(218, 160, 48, 0.1), rgba(218, 160, 48, 0.05))',

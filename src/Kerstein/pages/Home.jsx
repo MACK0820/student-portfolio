@@ -22,6 +22,18 @@ function Home({ mousePos }) {
         transition={{ duration: 0.8 }}
       >
         <div className="hero-section">
+          <motion.div
+            className="hero-image-section"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+          >
+            <div className="image-wrapper">
+              <img src="/profile-pic.jpeg" alt="Kerstein Ashby" className="profile-image" />
+              <div className="glow-effect"></div>
+            </div>
+          </motion.div>
+
           <div className="hero-text-section">
             <motion.span
               className="greeting"
@@ -92,18 +104,6 @@ function Home({ mousePos }) {
               </div>
             </motion.div>
           </div>
-
-          <motion.div
-            className="hero-image-section"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-          >
-            <div className="image-wrapper">
-              <img src="/profile-pic.jpeg" alt="Kerstein Ashby" className="profile-image" />
-              <div className="glow-effect"></div>
-            </div>
-          </motion.div>
         </div>
       </motion.div>
 

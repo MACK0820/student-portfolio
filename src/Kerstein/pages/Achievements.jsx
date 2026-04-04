@@ -14,9 +14,9 @@ function Achievements() {
   ]
 
   const highSchoolAwards = [
-    { title: 'Graduated with High Honors', year: 'Senior High School' },
+    { title: 'Graduated with High Honors', year: 'Junior High School' },
     { title: 'Art Club Secretary', year: 'Senior High School' },
-    { title: 'Consistent Honor Student', year: 'Junior High & Elementary' }
+    { title: 'Consistent Honor Student', year: 'Elementary to Senior High' }
   ]
 
   return (
