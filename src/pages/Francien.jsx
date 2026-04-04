@@ -497,80 +497,125 @@ function HeroSection({ setActiveSection, profilePic, isMobile, themeStyles, isDa
         </div>
 
         {/* QUICK STATS */}
-        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(150px, 1fr))', gap: isMobile ? '16px' : '26px', marginTop: isMobile ? '40px' : '100px', maxWidth: '100%' }}>
-          <div style={{
-            padding: isMobile ? '32px 22px' : '34px 24px',
+      <div style={{ 
+        display: 'grid', 
+        gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', 
+        gap: isMobile ? '16px' : '20px', 
+        marginTop: isMobile ? '40px' : '60px', 
+        maxWidth: '850px', 
+        width: '100%' 
+      }}>
+        
+        {/* BOX 1: YEARS OLD */}
+        <div 
+          onMouseEnter={(e) => {
+            e.currentTarget.style.borderColor = 'rgba(218, 160, 48, 0.8)'
+            e.currentTarget.style.boxShadow = '0 0 30px rgba(218, 160, 48, 0.5), inset 0 0 20px rgba(218, 160, 48, 0.1)'
+            e.currentTarget.style.background = 'linear-gradient(135deg, rgba(218, 160, 48, 0.2), rgba(218, 160, 48, 0.12))'
+            e.currentTarget.style.transform = 'translateY(-5px)'
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.borderColor = 'rgba(218, 160, 48, 0.4)'
+            e.currentTarget.style.boxShadow = '0 0 15px rgba(218, 160, 48, 0.2)'
+            e.currentTarget.style.background = 'linear-gradient(135deg, rgba(218, 160, 48, 0.1), rgba(218, 160, 48, 0.05))'
+            e.currentTarget.style.transform = 'translateY(0)'
+          }}
+          style={{
+            padding: '24px 15px',
             background: 'linear-gradient(135deg, rgba(218, 160, 48, 0.1), rgba(218, 160, 48, 0.05))',
             border: '2px solid rgba(218, 160, 48, 0.4)',
             borderRadius: '12px',
+            textAlign: 'center',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            minHeight: '150px',
             transition: 'all 0.3s ease',
-            cursor: 'pointer',
-            boxShadow: '0 0 15px rgba(218, 160, 48, 0.2)',
-            textAlign: 'center'
+            cursor: 'default'
           }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = 'rgba(218, 160, 48, 0.8)'
-              e.currentTarget.style.boxShadow = '0 0 30px rgba(218, 160, 48, 0.5), inset 0 0 20px rgba(218, 160, 48, 0.1)'
-              e.currentTarget.style.background = 'linear-gradient(135deg, rgba(218, 160, 48, 0.2), rgba(218, 160, 48, 0.12))'
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = 'rgba(218, 160, 48, 0.4)'
-              e.currentTarget.style.boxShadow = '0 0 15px rgba(218, 160, 48, 0.2)'
-              e.currentTarget.style.background = 'linear-gradient(135deg, rgba(218, 160, 48, 0.1), rgba(218, 160, 48, 0.05))'
-            }}>
-            <div style={{ fontSize: isMobile ? '46px' : '64px', fontWeight: 800, color: '#daa030', marginBottom: '8px' }}>20</div>
-            <div style={{ fontSize: isMobile ? '13px' : '14px', color: themeStyles.muted, textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 600 }}>Years Old</div>
-          </div>
+        >
+          <div style={{ fontSize: isMobile ? '36px' : '44px', fontWeight: 800, color: '#daa030', lineHeight: 1 }}>20</div>
+          <div style={{ fontSize: '11px', color: themeStyles.muted, textTransform: 'uppercase', fontWeight: 700, letterSpacing: '1px', marginTop: '8px' }}>Years Old</div>
+        </div>
 
-          <div style={{
-            padding: '28px 20px',
+        {/* BOX 2: YEAR LEVEL */}
+        <div 
+          onMouseEnter={(e) => {
+            e.currentTarget.style.borderColor = 'rgba(218, 160, 48, 0.8)'
+            e.currentTarget.style.boxShadow = '0 0 30px rgba(218, 160, 48, 0.5), inset 0 0 20px rgba(218, 160, 48, 0.1)'
+            e.currentTarget.style.background = 'linear-gradient(135deg, rgba(218, 160, 48, 0.2), rgba(218, 160, 48, 0.12))'
+            e.currentTarget.style.transform = 'translateY(-5px)'
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.borderColor = 'rgba(218, 160, 48, 0.4)'
+            e.currentTarget.style.boxShadow = '0 0 15px rgba(218, 160, 48, 0.2)'
+            e.currentTarget.style.background = 'linear-gradient(135deg, rgba(218, 160, 48, 0.1), rgba(218, 160, 48, 0.05))'
+            e.currentTarget.style.transform = 'translateY(0)'
+          }}
+          style={{
+            padding: '24px 15px',
             background: 'linear-gradient(135deg, rgba(218, 160, 48, 0.1), rgba(218, 160, 48, 0.05))',
             border: '2px solid rgba(218, 160, 48, 0.4)',
             borderRadius: '12px',
+            textAlign: 'center',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            minHeight: '150px',
             transition: 'all 0.3s ease',
-            cursor: 'pointer',
-            boxShadow: '0 0 15px rgba(218, 160, 48, 0.2)',
-            textAlign: 'center'
+            cursor: 'default'
           }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = 'rgba(218, 160, 48, 0.8)'
-              e.currentTarget.style.boxShadow = '0 0 30px rgba(218, 160, 48, 0.5), inset 0 0 20px rgba(218, 160, 48, 0.1)'
-              e.currentTarget.style.background = 'linear-gradient(135deg, rgba(218, 160, 48, 0.2), rgba(218, 160, 48, 0.12))'
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = 'rgba(218, 160, 48, 0.4)'
-              e.currentTarget.style.boxShadow = '0 0 15px rgba(218, 160, 48, 0.2)'
-              e.currentTarget.style.background = 'linear-gradient(135deg, rgba(218, 160, 48, 0.1), rgba(218, 160, 48, 0.05))'
-            }}>
-            <div style={{ fontSize: isMobile ? '40px' : '56px', fontWeight: 800, color: '#daa030', marginBottom: '8px' }}>2nd</div>
-            <div style={{ fontSize: '12px', color: themeStyles.muted, textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 600 }}>Year College</div>
-          </div>
+        >
+          <div style={{ fontSize: isMobile ? '36px' : '44px', fontWeight: 800, color: '#daa030', lineHeight: 1 }}>2nd</div>
+          <div style={{ fontSize: '11px', color: themeStyles.muted, textTransform: 'uppercase', fontWeight: 700, letterSpacing: '1px', marginTop: '8px' }}>Year College</div>
+        </div>
 
-          <div style={{
-            padding: '28px 20px',
+        {/* BOX 3: AWARDS & RECOGNITION */}
+        <div 
+          onMouseEnter={(e) => {
+            e.currentTarget.style.borderColor = 'rgba(218, 160, 48, 0.8)'
+            e.currentTarget.style.boxShadow = '0 0 30px rgba(218, 160, 48, 0.5), inset 0 0 20px rgba(218, 160, 48, 0.1)'
+            e.currentTarget.style.background = 'linear-gradient(135deg, rgba(218, 160, 48, 0.2), rgba(218, 160, 48, 0.12))'
+            e.currentTarget.style.transform = 'translateY(-5px)'
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.borderColor = 'rgba(218, 160, 48, 0.4)'
+            e.currentTarget.style.boxShadow = '0 0 15px rgba(218, 160, 48, 0.2)'
+            e.currentTarget.style.background = 'linear-gradient(135deg, rgba(218, 160, 48, 0.1), rgba(218, 160, 48, 0.05))'
+            e.currentTarget.style.transform = 'translateY(0)'
+          }}
+          style={{
+            padding: '24px 10px', // Slightly less horizontal padding for long text
             background: 'linear-gradient(135deg, rgba(218, 160, 48, 0.1), rgba(218, 160, 48, 0.05))',
             border: '2px solid rgba(218, 160, 48, 0.4)',
             borderRadius: '12px',
+            textAlign: 'center',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            minHeight: '150px',
             transition: 'all 0.3s ease',
-            cursor: 'pointer',
-            boxShadow: '0 0 15px rgba(218, 160, 48, 0.2)',
-            textAlign: 'center'
+            cursor: 'default'
           }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = 'rgba(218, 160, 48, 0.8)'
-              e.currentTarget.style.boxShadow = '0 0 30px rgba(218, 160, 48, 0.5), inset 0 0 20px rgba(218, 160, 48, 0.1)'
-              e.currentTarget.style.background = 'linear-gradient(135deg, rgba(218, 160, 48, 0.2), rgba(218, 160, 48, 0.12))'
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = 'rgba(218, 160, 48, 0.4)'
-              e.currentTarget.style.boxShadow = '0 0 15px rgba(218, 160, 48, 0.2)'
-              e.currentTarget.style.background = 'linear-gradient(135deg, rgba(218, 160, 48, 0.1), rgba(218, 160, 48, 0.05))'
-            }}>
-            <div style={{ fontSize: isMobile ? '40px' : '56px', fontWeight: 800, color: '#daa030', marginBottom: '8px' }}>9+</div>
-            <div style={{ fontSize: '12px', color: themeStyles.muted, textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 600 }}>Awards & Recognition</div>
+        >
+          <div style={{ fontSize: isMobile ? '36px' : '44px', fontWeight: 800, color: '#daa030', lineHeight: 1 }}>9+</div>
+          <div style={{ 
+            fontSize: '11px', 
+            color: themeStyles.muted, 
+            textTransform: 'uppercase', 
+            fontWeight: 700, 
+            letterSpacing: '1px', 
+            marginTop: '8px',
+            lineHeight: '1.4' // Helps text wrap cleanly
+          }}>
+            Awards &<br /> Recognition
           </div>
         </div>
-      </div>
+      </div> 
+    </div>
 
       {/* RIGHT - WILD PHOTO DISPLAY (Order 1 on mobile to be on top) */}
         <div style={{
@@ -674,7 +719,7 @@ function HeroSection({ setActiveSection, profilePic, isMobile, themeStyles, isDa
             left: isMobile ? '0px' : '-30px'
           }} />
         </div>
-    </div>
+      </div>
   )
 }
 

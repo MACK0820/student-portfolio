@@ -11,13 +11,13 @@ const students = [
   },
   {
     id: 's2',
-    initials: 'MC',
+    initials: 'MC', // Or use 'TBA'
     number: '02',
     name: 'Maryneil G. Co',
     course: 'BS Computer Engineering',
     year: '2nd Year · Batch 2024',
-    bio: 'Data engineer and machine learning practitioner building scalable AI systems. I turn complex datasets into clear insights. Finishing my thesis on predictive modeling for student academic performance.',
-    chips: ['React', 'Node.js', 'Figma', 'Python', 'C++', 'HTML/CSS', 'mySQL', 'JavaScript'],
+    bio: 'Computer Engineering student at TIP-Manila. Currently developing a portfolio to showcase projects in hardware integration and software development. Stay tuned for updates.',
+    chips: ['C++', 'Python', 'Circuit Design', 'Logic Gates', 'Cisco'],
   },
   {
     id: 's3',
