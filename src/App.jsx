@@ -16,6 +16,10 @@ function App() {
   const [selected, setSelected] = useState(null)
 
   const handleSelect = (student) => {
+    if (student.externalUrl) {
+      window.open(student.externalUrl, '_blank')
+      return
+    }
     setSelected(student)
     window.scrollTo({ top: 0 })
   }

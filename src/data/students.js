@@ -11,13 +11,14 @@ const students = [
   },
   {
     id: 's2',
-    initials: 'MC', // Or use 'TBA'
+    initials: 'MC',
     number: '02',
     name: 'Maryneil G. Co',
     course: 'BS Computer Engineering',
     year: '2nd Year · Batch 2024',
     bio: 'Computer Engineering student at TIP-Manila. Currently developing a portfolio to showcase projects in hardware integration and software development. Stay tuned for updates.',
-    chips: ['C++', 'Python', 'Circuit Design', 'Logic Gates', 'Cisco'],
+    chips: ['React', 'Node.js', 'Figma', 'Python', 'C++', 'HTML/CSS', 'mySQL', 'JavaScript'],
+    externalUrl: 'https://portfolio-peach-nine-98.vercel.app/?fbclid=IwY2xjawRNeOFleHRuA2FlbQIxMABicmlkETF6MEd1RmVBeHdEVDY2N2tZc3J0YwZhcHBfaWQQMjIyMDM5MTc4ODIwMDg5MgABHkXiqK6uEaoZWhoxoVWC92O965W7jwhkemMeSEUDZ4K7wR1oQSwr50P_x9DY_aem_89fENvWyd6s4NKg8gMrRRA' 
   },
   {
     id: 's3',
